@@ -11,13 +11,13 @@ namespace Naninovel
         public const string ResourcePath = "Naninovel/" + nameof(Live2DConfiguration);
 
         public int RenderLayer => renderLayer;
-        public float OrthoSize => orthoSize;
+        public Camera RenderCamera => renderCamera;
         public Vector3 CameraOffset => cameraOffset;
 
         [Tooltip("The layer to use when rendering Live2D prefabs to render textures.")]
         [SerializeField] private int renderLayer = 30;
-        [Tooltip("Orthographic size of the render camera.")]
-        [SerializeField] private float orthoSize = 1;
+        [Tooltip("Camera prefab to use for rendering Live2D prefabs into render textures.")]
+        [SerializeField] private Camera renderCamera = null;
         [Tooltip("Render camera ofsset from the rendered Live2D prefab.")]
         [SerializeField] private Vector3 cameraOffset = new Vector3(0, 0, -10);
 

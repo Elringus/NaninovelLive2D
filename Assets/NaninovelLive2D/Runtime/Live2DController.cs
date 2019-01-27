@@ -14,6 +14,8 @@ namespace Naninovel
     [RequireComponent(typeof(Animator), typeof(CubismRenderController), typeof(CubismLookController))]
     public class Live2DController : MonoBehaviour
     {
+        public Vector3 ModelScale { get => modelTransform.localScale; set => modelTransform.localScale = value; }
+
         [Tooltip("Whether to make the Live2D model to look at right, left or center, depending on the position on the scene.")]
         [SerializeField] private bool controlLook = true;
 
@@ -21,6 +23,7 @@ namespace Naninovel
         private CubismRenderController renderController;
         private CubismLookController lookController;
         private CubismLookTargetBehaviour lookTarget;
+        private Transform modelTransform;
 
         public void SetRenderCamera (Camera camera)
         {
@@ -52,6 +55,9 @@ namespace Naninovel
 
         private void Awake ()
         {
+            modelTransform = transform.Find("Drawables");
+            Debug.Assert(modelTransform, "Failed to find Drawables gameobject inside Live2D prefab.");
+
             animator = GetComponent<Animator>();
             renderController = GetComponent<CubismRenderController>();
             lookController = GetComponent<CubismLookController>();

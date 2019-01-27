@@ -15,6 +15,8 @@ namespace Naninovel
     {
         public override string Appearance { get => appearance; set => SetAppearance(value); }
         public override bool IsVisible { get => isVisible; set => SetVisibility(value); }
+        public override Vector3 Position { get => position; set { CompletePositionTween(); SetPosition(value); } }
+        public override Vector3 Scale { get => scale; set { CompleteScaleTween(); SetScale(value); } }
         public CharacterLookDirection LookDirection { get => lookDirection; set => SetLookDirection(value); }
 
         protected LocalizableResourceLoader<Live2DController> PrefabLoader { get; private set; }
@@ -26,8 +28,14 @@ namespace Naninovel
         private static readonly Vector3 prefabOffset = new Vector3(0, 0, -999);
         private static float distributeXOffset = -999;
 
+        private static Live2DConfiguration config;
+        private static OrthoCamera refCamera;
+        private static CharacterManager charManager;
         private string appearance;
         private bool isVisible;
+        private Vector3 scale = Vector3.one;
+        private Vector3 position = Vector3.zero;
+        private Tweener<VectorTween> positionTweener, scaleTweener;
         private CharacterLookDirection lookDirection;
 
         public Live2DCharacter (string name, OrthoActorMetadata metadata) 
@@ -35,6 +43,14 @@ namespace Naninovel
         {
             // Only project provider is supported.
             metadata.LoaderConfiguration.ProviderTypes = new List<ResourceProviderType> { ResourceProviderType.Project };
+
+            if (!config) config = Live2DConfiguration.LoadFromResources();
+            if (refCamera is null) refCamera = Engine.GetService<OrthoCamera>();
+            if (charManager is null) charManager = Engine.GetService<CharacterManager>();
+            positionTweener = new Tweener<VectorTween>(ActorBehaviour);
+            scaleTweener = new Tweener<VectorTween>(ActorBehaviour);
+
+            refCamera.OnAspectChanged += UpdateRenderOrthoSize;
 
             var providerMngr = Engine.GetService<ResourceProviderManager>();
             var localeMngr = Engine.GetService<LocalizationManager>();
@@ -45,6 +61,30 @@ namespace Naninovel
             SpriteRenderer.PixelsPerUnit = metadata.PixelsPerUnit;
 
             SetVisibility(false);
+        }
+
+        public override async Task ChangePositionAsync (Vector3 position, float duration)
+        {
+            CompletePositionTween();
+            var curPos = this.position;
+            this.position = position;
+
+            InitializeController();
+            //var worldY = Live2DController.transform.TransformPoint(RenderCamera.transform.localPosition - config.CameraOffset).y + charManager.GlobalSceneOrigin.y;
+            //var curPos = new Vector3(Transform.position.x, worldY, Transform.position.z);
+            var tween = new VectorTween(curPos, position, duration, SetPosition, false, true);
+            await positionTweener.RunAsync(tween);
+            SetPosition(position);
+        }
+
+        public override async Task ChangeScaleAsync (Vector3 scale, float duration)
+        {
+            CompleteScaleTween();
+            this.scale = scale;
+
+            InitializeController();
+            var tween = new VectorTween(Live2DController.ModelScale, scale, duration, SetScale, false, true);
+            await scaleTweener.RunAsync(tween);
         }
 
         public override Task ChangeAppearanceAsync (string appearance, float duration)
@@ -84,7 +124,28 @@ namespace Naninovel
         {
             base.Dispose();
 
+            if (refCamera != null)
+                refCamera.OnAspectChanged -= UpdateRenderOrthoSize;
+
             DisposeResources();
+        }
+
+        protected override void SetPosition (Vector3 position)
+        {
+            this.position = position;
+
+            InitializeController();
+            Transform.position = new Vector3(position.x, charManager.GlobalSceneOrigin.y, position.z);
+            var localY = Live2DController.transform.InverseTransformPoint((Vector2)position - charManager.GlobalSceneOrigin).y;
+            RenderCamera.transform.localPosition = new Vector3(config.CameraOffset.x, config.CameraOffset.y - localY, config.CameraOffset.z);
+        }
+
+        protected override void SetScale (Vector3 scale)
+        {
+            this.scale = scale;
+
+            InitializeController();
+            Live2DController.ModelScale = scale;
         }
 
         protected virtual void SetAppearance (string appearance)
@@ -118,9 +179,6 @@ namespace Naninovel
 
             if (!live2DPrefab) live2DPrefab = PrefabLoader.Load(Name).gameObject;
 
-            var config = Live2DConfiguration.LoadFromResources();
-            var refCamera = Engine.GetService<OrthoCamera>();
-
             Live2DController = Engine.Instantiate(live2DPrefab, $"{Name} Live2D Renderer")?.GetComponent<Live2DController>();
             Debug.Assert(Live2DController, $"Failed to initialize Live2D controller: {live2DPrefab.name} prefab is invalid or doesn't have {nameof(Naninovel.Live2DController)} component attached to the root object.");
             Live2DController.transform.localPosition = Vector3.zero + prefabOffset;
@@ -133,13 +191,12 @@ namespace Naninovel
 
             SpriteRenderer.MainTexture = RenderTexture;
 
-            RenderCamera = Engine.CreateObject<Camera>("RenderCamera");
+            RenderCamera = config.RenderCamera ? Engine.Instantiate(config.RenderCamera, "RenderCamera") : Engine.CreateObject<Camera>("RenderCamera");
             RenderCamera.transform.SetParent(Live2DController.transform, false);
             RenderCamera.transform.localPosition = Vector3.zero + config.CameraOffset;
             RenderCamera.targetTexture = RenderTexture;
             RenderCamera.cullingMask = 1 << config.RenderLayer;
-            RenderCamera.orthographic = true;
-            RenderCamera.orthographicSize = config.OrthoSize;
+            RenderCamera.orthographicSize = refCamera.Camera.orthographicSize;
 
             Live2DController.SetRenderCamera(RenderCamera);
         }
@@ -152,6 +209,23 @@ namespace Naninovel
                 Object.Destroy(Live2DController.gameObject);
             Live2DController = null;
             PrefabLoader?.UnloadAllAsync();
+        }
+
+        private void CompletePositionTween ()
+        {
+            if (positionTweener.IsRunning)
+                positionTweener.CompleteInstantly();
+        }
+
+        private void CompleteScaleTween ()
+        {
+            if (scaleTweener.IsRunning)
+                scaleTweener.CompleteInstantly();
+        }
+
+        private void UpdateRenderOrthoSize (float aspect)
+        {
+            RenderCamera.orthographicSize = refCamera.Camera.orthographicSize;
         }
     }
 }

@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Live2DConfiguration
   m_EditorClassIdentifier: 
   renderLayer: 30
-  orthoSize: 0.5
-  cameraOffset: {x: 0, y: 0.15, z: -10}
+  renderCamera: {fileID: 5913037108870058489, guid: 140bb205602d7554c9d203d5632b052b,
+    type: 3}
+  cameraOffset: {x: 0, y: 0, z: -10}
