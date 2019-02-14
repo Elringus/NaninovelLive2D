@@ -38,7 +38,7 @@ namespace Naninovel
         private Tweener<VectorTween> positionTweener, scaleTweener;
         private CharacterLookDirection lookDirection;
 
-        public Live2DCharacter (string name, OrthoActorMetadata metadata) 
+        public Live2DCharacter (string name, CharacterMetadata metadata) 
             : base(name)
         {
             // Only project provider is supported.
