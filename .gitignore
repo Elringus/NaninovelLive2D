@@ -5,11 +5,8 @@
 /[Bb]uilds/
 .gradle*
 /Assets/AssetStoreTools*
-/Assets/@Transient*
-/Assets/Resources*
-/Assets/_Resources*
-/Assets/NovelSaveData*
-/Assets/ThirdParty*
+/Assets/ThirdParty/*
+!/Assets/ThirdParty/NaninovelData*
 
 # Allow third-party dlls
 !*.dll

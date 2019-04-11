@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 152a604f7ea004245b5569f53d69586e, type: 3}
+  m_Name: InputConfiguration
+  m_EditorClassIdentifier: 
+  Bindings:
+  - Name: Submit
+    AlwaysProcess: 0
+    Keys: 43010000
+    Axes: []
+  - Name: Cancel
+    AlwaysProcess: 1
+    Keys: 1b000000
+    Axes: []
+  - Name: Continue
+    AlwaysProcess: 0
+    Keys: 0d0000000f0100004a010000
+    Axes:
+    - AxisName: Mouse ScrollWheel
+      TriggerMode: 2
+      TriggerTolerance: 0.001
+  - Name: Skip
+    AlwaysProcess: 0
+    Keys: 32010000310100004b010000
+    Axes: []
+  - Name: AutoPlay
+    AlwaysProcess: 0
+    Keys: 610000004c010000
+    Axes: []
+  - Name: ToggleUI
+    AlwaysProcess: 0
+    Keys: 200000004d010000
+    Axes: []
+  - Name: ShowBacklog
+    AlwaysProcess: 0
+    Keys: 620000004e010000
+    Axes:
+    - AxisName: Mouse ScrollWheel
+      TriggerMode: 1
+      TriggerTolerance: 0.001
+  TouchContinueCooldown: 0.1
+  SpawnEventSystem: 1

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb57312f1ea7fb4a8075a7a9c837c80, type: 3}
+  m_Name: ScriptsConfiguration
+  m_EditorClassIdentifier: 
+  Loader:
+    PathPrefix: Scripts
+    ProviderTypes: 0000000001000000
+  StartGameScript: TestScript
+  EnableCommunityModding: 0
+  ExternalLoader:
+    PathPrefix: Scripts
+    ProviderTypes: 01000000
+  EnableNavigator: 1
+  ShowNavigatorOnInit: 0
+  NavigatorSortOrder: 900

@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38acf29c06b5d7e41aecac8361cc7e57, type: 3}
+  m_Name: ChoiceHandlersConfiguration
+  m_EditorClassIdentifier: 
+  DefaultHandlerId: ButtonList
+  DefaultMetadata:
+    Implementation: Naninovel.UIChoiceHandler
+    LoaderConfiguration:
+      PathPrefix: ChoiceHandlers
+      ProviderTypes: 0000000001000000
+    guid: b621d883-40a0-4cb7-8961-f05f4e2ca9bd
+  Metadata:
+    ids:
+    - ButtonList
+    - ButtonArea
+    metas:
+    - Implementation: Naninovel.UIChoiceHandler
+      LoaderConfiguration:
+        PathPrefix: Naninovel/ChoiceHandlers
+        ProviderTypes: 0000000001000000
+      guid: 44b33d17-205d-4dc0-b921-e0a17ada06c6
+    - Implementation: Naninovel.UIChoiceHandler
+      LoaderConfiguration:
+        PathPrefix: Naninovel/ChoiceHandlers
+        ProviderTypes: 0000000001000000
+      guid: 850323fd-69d4-407a-a15d-f9a64b277c66

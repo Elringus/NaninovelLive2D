@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69a917b2d27c85844824364a4a629f05, type: 3}
   m_Name: Live2DConfiguration
   m_EditorClassIdentifier: 
-  renderLayer: 30
-  renderCamera: {fileID: 5913037108870058489, guid: 140bb205602d7554c9d203d5632b052b,
-    type: 3}
-  cameraOffset: {x: 0, y: 0, z: -10}
+  RenderLayer: 30
+  RenderCamera: {fileID: 0}
+  CameraOffset: {x: 0, y: 0, z: -10}

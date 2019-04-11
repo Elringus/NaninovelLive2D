@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3be34281d83bad429e22787cd3c8069, type: 3}
+  m_Name: CharactersConfiguration
+  m_EditorClassIdentifier: 
+  SceneOrigin: {x: 0.5, y: 0}
+  AutoArrangeOnAdd: 1
+  DefaultMetadata:
+    Implementation: Naninovel.SpriteCharacter
+    LoaderConfiguration:
+      PathPrefix: Characters
+      ProviderTypes: 0000000001000000
+    guid: dd8538b5-2667-404c-8c36-58d55b0a6175
+    Pivot: {x: 0.5, y: 0}
+    PixelsPerUnit: 100
+    DisplayName: 
+    UseCharacterColor: 0
+    NameColor: {r: 1, g: 1, b: 1, a: 1}
+    MessageColor: {r: 1, g: 1, b: 1, a: 1}
+    AvatarTexture: {fileID: 0}
+  Metadata:
+    ids:
+    - Hiyori
+    - Kohaku
+    metas:
+    - Implementation: Naninovel.Live2DCharacter
+      LoaderConfiguration:
+        PathPrefix: Characters
+        ProviderTypes: 0000000001000000
+      guid: 2c24c719-2ca3-4b64-876a-e658da6e62e8
+      Pivot: {x: 0.5, y: 0}
+      PixelsPerUnit: 100
+      DisplayName: 
+      UseCharacterColor: 0
+      NameColor: {r: 1, g: 1, b: 1, a: 1}
+      MessageColor: {r: 1, g: 1, b: 1, a: 1}
+      AvatarTexture: {fileID: 0}
+    - Implementation: Naninovel.SpriteCharacter
+      LoaderConfiguration:
+        PathPrefix: Characters
+        ProviderTypes: 0000000001000000
+      guid: 93c36852-dc49-430f-80d1-518401a5d775
+      Pivot: {x: 0.5, y: 0}
+      PixelsPerUnit: 100
+      DisplayName: 
+      UseCharacterColor: 0
+      NameColor: {r: 1, g: 1, b: 1, a: 1}
+      MessageColor: {r: 1, g: 1, b: 1, a: 1}
+      AvatarTexture: {fileID: 0}

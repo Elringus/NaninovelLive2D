@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2cdf0df4ee3a01488d71a4f9583fdaf, type: 3}
+  m_Name: BackgroundsConfiguration
+  m_EditorClassIdentifier: 
+  SceneOrigin: {x: 0.5, y: 0}
+  ZOffset: 100
+  DefaultMetadata:
+    Implementation: Naninovel.SpriteBackground
+    LoaderConfiguration:
+      PathPrefix: Backgrounds
+      ProviderTypes: 0000000001000000
+    guid: 3c3bd956-aff0-4b0d-942f-fd523e38f6d5
+    Pivot: {x: 0.5, y: 0.5}
+    PixelsPerUnit: 100
+  Metadata:
+    ids:
+    - MainBackground
+    metas:
+    - Implementation: Naninovel.SpriteBackground
+      LoaderConfiguration:
+        PathPrefix: Backgrounds
+        ProviderTypes: 0000000001000000
+      guid: 5035aeb5-a356-4900-a306-f889bb338346
+      Pivot: {x: 0.5, y: 0.5}
+      PixelsPerUnit: 100

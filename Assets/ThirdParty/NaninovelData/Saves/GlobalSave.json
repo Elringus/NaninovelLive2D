@@ -1,0 +1,10 @@
+{
+    "keys": [
+        "Naninovel.CustomVariableManager+VariableMap",
+        "Naninovel.NovelScriptPlayer+GlobalState"
+    ],
+    "values": [
+        "{\n    \"keys\": [],\n    \"values\": []\n}",
+        "{\n    \"PlayedScriptRegister\": {\n        \"playedScripts\": [\n            {\n                \"ScriptName\": \"TestScript\",\n                \"PlayedIndexes\": [\n                    {\n                        \"startIndex\": 0,\n                        \"endIndex\": 10\n                    }\n                ]\n            }\n        ]\n    }\n}"
+    ]
+}

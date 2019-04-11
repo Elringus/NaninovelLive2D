@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using UnityCommon;
 using UnityEngine;
 
@@ -19,12 +18,13 @@ namespace Naninovel
         public override Vector3 Scale { get => scale; set { CompleteScaleTween(); SetScale(value); } }
         public CharacterLookDirection LookDirection { get => lookDirection; set => SetLookDirection(value); }
 
-        protected LocalizableResourceLoader<Live2DController> PrefabLoader { get; private set; }
+        protected LocalizableResourceLoader<GameObject> PrefabLoader { get; private set; }
         protected Live2DController Live2DController { get; private set; }
         protected RenderTexture RenderTexture { get; private set; }
         protected Camera RenderCamera { get; private set; }
         protected NovelSpriteRenderer SpriteRenderer { get; }
 
+        private const string defaultCameraResource = "Naninovel/RenderCamera";
         private static readonly Vector3 prefabOffset = new Vector3(0, 0, -999);
         private static float distributeXOffset = -999;
 
@@ -38,13 +38,10 @@ namespace Naninovel
         private Tweener<VectorTween> positionTweener, scaleTweener;
         private CharacterLookDirection lookDirection;
 
-        public Live2DCharacter (string name, CharacterMetadata metadata) 
-            : base(name)
+        public Live2DCharacter (string id, CharacterMetadata metadata) 
+            : base(id, metadata)
         {
-            // Only project provider is supported.
-            metadata.LoaderConfiguration.ProviderTypes = new List<ResourceProviderType> { ResourceProviderType.Project };
-
-            if (!config) config = Live2DConfiguration.LoadFromResources();
+            if (!config) config = Configuration.LoadOrDefault<Live2DConfiguration>();
             if (refCamera is null) refCamera = Engine.GetService<OrthoCamera>();
             if (charManager is null) charManager = Engine.GetService<CharacterManager>();
             positionTweener = new Tweener<VectorTween>(ActorBehaviour);
@@ -54,7 +51,9 @@ namespace Naninovel
 
             var providerMngr = Engine.GetService<ResourceProviderManager>();
             var localeMngr = Engine.GetService<LocalizationManager>();
-            PrefabLoader = new LocalizableResourceLoader<Live2DController>(metadata.LoaderConfiguration, providerMngr, localeMngr);
+            PrefabLoader = new LocalizableResourceLoader<GameObject>(
+                providerMngr.GetProviderList(ResourceProviderType.Project), 
+                localeMngr, metadata.LoaderConfiguration.PathPrefix);
 
             SpriteRenderer = GameObject.AddComponent<NovelSpriteRenderer>();
             SpriteRenderer.Pivot = metadata.Pivot;
@@ -110,8 +109,8 @@ namespace Naninovel
         {
             if (Live2DController) return;
 
-            var prefab = await PrefabLoader.LoadAsync(Name);
-            InitializeController(prefab.gameObject);
+            var prefab = await PrefabLoader.LoadAsync(Id);
+            InitializeController(prefab.Object);
         }
 
         public override Task UnloadResourcesAsync (string appearance = null)
@@ -177,9 +176,10 @@ namespace Naninovel
         {
             if (Live2DController) return;
 
-            if (!live2DPrefab) live2DPrefab = PrefabLoader.Load(Name).gameObject;
+            if (!ObjectUtils.IsValid(live2DPrefab))
+                live2DPrefab = PrefabLoader.Load(Id);
 
-            Live2DController = Engine.Instantiate(live2DPrefab, $"{Name} Live2D Renderer")?.GetComponent<Live2DController>();
+            Live2DController = Engine.Instantiate(live2DPrefab, $"{Id} Live2D Renderer")?.GetComponent<Live2DController>();
             Debug.Assert(Live2DController, $"Failed to initialize Live2D controller: {live2DPrefab.name} prefab is invalid or doesn't have {nameof(Naninovel.Live2DController)} component attached to the root object.");
             Live2DController.transform.localPosition = Vector3.zero + prefabOffset;
             Live2DController.transform.AddPosX(distributeXOffset); // Distribute concurrently used Live2D prefabs.
@@ -191,7 +191,8 @@ namespace Naninovel
 
             SpriteRenderer.MainTexture = RenderTexture;
 
-            RenderCamera = config.RenderCamera ? Engine.Instantiate(config.RenderCamera, "RenderCamera") : Engine.CreateObject<Camera>("RenderCamera");
+            var cameraPrefab = ObjectUtils.IsValid(config.CustomRenderCamera) ? config.CustomRenderCamera : Resources.Load<Camera>(defaultCameraResource);
+            RenderCamera = Engine.Instantiate(cameraPrefab, "RenderCamera");
             RenderCamera.transform.SetParent(Live2DController.transform, false);
             RenderCamera.transform.localPosition = Vector3.zero + config.CameraOffset;
             RenderCamera.targetTexture = RenderTexture;
@@ -208,7 +209,8 @@ namespace Naninovel
             if (Live2DController)
                 Object.Destroy(Live2DController.gameObject);
             Live2DController = null;
-            PrefabLoader?.UnloadAllAsync();
+            // TODO: Can't unload prefab assets.
+            //PrefabLoader?.UnloadAllAsync();
         }
 
         private void CompletePositionTween ()
