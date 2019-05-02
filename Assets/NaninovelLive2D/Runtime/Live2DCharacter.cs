@@ -14,8 +14,8 @@ namespace Naninovel
     {
         public override string Appearance { get => appearance; set => SetAppearance(value); }
         public override bool IsVisible { get => isVisible; set => SetVisibility(value); }
-        public override Vector3 Position { get => position; set { CompletePositionTween(); SetPosition(value); } }
-        public override Vector3 Scale { get => scale; set { CompleteScaleTween(); SetScale(value); } }
+        public override Vector3 Position { get => position; set { CompletePositionTween(); SetBehaviourPosition(value); } }
+        public override Vector3 Scale { get => scale; set { CompleteScaleTween(); SetBehaviourScale(value); } }
         public CharacterLookDirection LookDirection { get => lookDirection; set => SetLookDirection(value); }
 
         protected LocalizableResourceLoader<GameObject> PrefabLoader { get; private set; }
@@ -62,7 +62,7 @@ namespace Naninovel
             SetVisibility(false);
         }
 
-        public override async Task ChangePositionAsync (Vector3 position, float duration)
+        public override async Task ChangePositionAsync (Vector3 position, float duration, EasingType easingType = default)
         {
             CompletePositionTween();
             var curPos = this.position;
@@ -71,35 +71,35 @@ namespace Naninovel
             InitializeController();
             //var worldY = Live2DController.transform.TransformPoint(RenderCamera.transform.localPosition - config.CameraOffset).y + charManager.GlobalSceneOrigin.y;
             //var curPos = new Vector3(Transform.position.x, worldY, Transform.position.z);
-            var tween = new VectorTween(curPos, position, duration, SetPosition, false, true);
+            var tween = new VectorTween(curPos, position, duration, SetBehaviourPosition, false, easingType);
             await positionTweener.RunAsync(tween);
-            SetPosition(position);
+            SetBehaviourPosition(position);
         }
 
-        public override async Task ChangeScaleAsync (Vector3 scale, float duration)
+        public override async Task ChangeScaleAsync (Vector3 scale, float duration, EasingType easingType = default)
         {
             CompleteScaleTween();
             this.scale = scale;
 
             InitializeController();
-            var tween = new VectorTween(Live2DController.ModelScale, scale, duration, SetScale, false, true);
+            var tween = new VectorTween(Live2DController.ModelScale, scale, duration, SetBehaviourScale, false, easingType);
             await scaleTweener.RunAsync(tween);
         }
 
-        public override Task ChangeAppearanceAsync (string appearance, float duration)
+        public override Task ChangeAppearanceAsync (string appearance, float duration, EasingType easingType = default)
         {
             SetAppearance(appearance);
             return Task.CompletedTask;
         }
 
-        public override async Task ChangeVisibilityAsync (bool isVisible, float duration)
+        public override async Task ChangeVisibilityAsync (bool isVisible, float duration, EasingType easingType = default)
         {
             this.isVisible = isVisible;
 
-            await SpriteRenderer.FadeToAsync(isVisible ? 1 : 0, duration);
+            await SpriteRenderer.FadeToAsync(isVisible ? 1 : 0, duration, easingType);
         }
 
-        public Task ChangeLookDirectionAsync (CharacterLookDirection lookDirection, float duration)
+        public Task ChangeLookDirectionAsync (CharacterLookDirection lookDirection, float duration, EasingType easingType = default)
         {
             SetLookDirection(lookDirection);
             return Task.CompletedTask;
@@ -129,7 +129,7 @@ namespace Naninovel
             DisposeResources();
         }
 
-        protected override void SetPosition (Vector3 position)
+        protected override void SetBehaviourPosition (Vector3 position)
         {
             this.position = position;
 
@@ -139,7 +139,7 @@ namespace Naninovel
             RenderCamera.transform.localPosition = new Vector3(config.CameraOffset.x, config.CameraOffset.y - localY, config.CameraOffset.z);
         }
 
-        protected override void SetScale (Vector3 scale)
+        protected override void SetBehaviourScale (Vector3 scale)
         {
             this.scale = scale;
 
@@ -170,6 +170,15 @@ namespace Naninovel
 
             InitializeController();
             Live2DController.SetLookDirection(lookDirection);
+        }
+
+        protected override Color GetBehaviourTintColor () => SpriteRenderer.TintColor;
+
+        protected override void SetBehaviourTintColor (Color tintColor)
+        {
+            if (!IsVisible) // Handle visibility-controlled alpha of the tint color.
+                tintColor.a = SpriteRenderer.TintColor.a;
+            SpriteRenderer.TintColor = tintColor;
         }
 
         private void InitializeController (GameObject live2DPrefab = null)
