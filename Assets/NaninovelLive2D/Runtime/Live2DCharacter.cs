@@ -29,7 +29,7 @@ namespace Naninovel
         private static float distributeXOffset = -999;
 
         private static Live2DConfiguration config;
-        private static OrthoCamera refCamera;
+        private static CameraManager refCamera;
         private static CharacterManager charManager;
         private string appearance;
         private bool isVisible;
@@ -42,7 +42,7 @@ namespace Naninovel
             : base(id, metadata)
         {
             if (!config) config = Configuration.LoadOrDefault<Live2DConfiguration>();
-            if (refCamera is null) refCamera = Engine.GetService<OrthoCamera>();
+            if (refCamera is null) refCamera = Engine.GetService<CameraManager>();
             if (charManager is null) charManager = Engine.GetService<CharacterManager>();
             positionTweener = new Tweener<VectorTween>(ActorBehaviour);
             scaleTweener = new Tweener<VectorTween>(ActorBehaviour);
