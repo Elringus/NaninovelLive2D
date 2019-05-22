@@ -181,7 +181,7 @@ namespace Naninovel
             SpriteRenderer.TintColor = tintColor;
         }
 
-        private void InitializeController (GameObject live2DPrefab = null)
+        protected virtual void InitializeController (GameObject live2DPrefab = null)
         {
             if (Live2DController) return;
 
