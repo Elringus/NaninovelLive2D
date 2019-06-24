@@ -1,12 +1,12 @@
-﻿# Start
+# Start
 @back Road wait:false
 @char Hiyori.Default scale:1
 1
 @char Hiyori.Happy scale:1.5 wait:false
-@arrange Hiyori.0.35
+@arrange Hiyori.35
 2
 @char Hiyori.Angry wait:false
-@arrange Hiyori.0.75
+@arrange Hiyori.75
 3
 ;@char Koharu
 ;4

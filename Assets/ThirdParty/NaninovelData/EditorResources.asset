@@ -32,4 +32,4 @@ MonoBehaviour:
     Resources:
     - Name: TestScript
       PathPrefix: Scripts
-      Guid: 0b11690cc5db0724f98265d63a2a2d43
+      Guid: e8d729144a6c4274f8c88b151fa577ea

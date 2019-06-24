@@ -22,7 +22,7 @@ namespace Naninovel
         protected Live2DController Live2DController { get; private set; }
         protected RenderTexture RenderTexture { get; private set; }
         protected Camera RenderCamera { get; private set; }
-        protected NovelSpriteRenderer SpriteRenderer { get; }
+        protected TransitionalSpriteRenderer SpriteRenderer { get; }
 
         private const string defaultCameraResource = "Naninovel/RenderCamera";
         private static readonly Vector3 prefabOffset = new Vector3(0, 0, -999);
@@ -55,11 +55,19 @@ namespace Naninovel
                 providerMngr.GetProviderList(ResourceProviderType.Project), 
                 localeMngr, metadata.LoaderConfiguration.PathPrefix);
 
-            SpriteRenderer = GameObject.AddComponent<NovelSpriteRenderer>();
+            SpriteRenderer = GameObject.AddComponent<TransitionalSpriteRenderer>();
             SpriteRenderer.Pivot = metadata.Pivot;
             SpriteRenderer.PixelsPerUnit = metadata.PixelsPerUnit;
 
             SetVisibility(false);
+        }
+
+        public override async Task InitializeAsync ()
+        {
+            await base.InitializeAsync();
+
+            var live2DPrefab = await PrefabLoader.LoadAsync(Id);
+            InitializeController(live2DPrefab);
         }
 
         public override async Task ChangePositionAsync (Vector3 position, float duration, EasingType easingType = default)
@@ -68,7 +76,6 @@ namespace Naninovel
             var curPos = this.position;
             this.position = position;
 
-            InitializeController();
             //var worldY = Live2DController.transform.TransformPoint(RenderCamera.transform.localPosition - config.CameraOffset).y + charManager.GlobalSceneOrigin.y;
             //var curPos = new Vector3(Transform.position.x, worldY, Transform.position.z);
             var tween = new VectorTween(curPos, position, duration, SetBehaviourPosition, false, easingType);
@@ -81,7 +88,6 @@ namespace Naninovel
             CompleteScaleTween();
             this.scale = scale;
 
-            InitializeController();
             var tween = new VectorTween(Live2DController.ModelScale, scale, duration, SetBehaviourScale, false, easingType);
             await scaleTweener.RunAsync(tween);
         }
@@ -105,20 +111,6 @@ namespace Naninovel
             return Task.CompletedTask;
         }
 
-        public override async Task PreloadResourcesAsync (string appearance = null)
-        {
-            if (Live2DController) return;
-
-            var prefab = await PrefabLoader.LoadAsync(Id);
-            InitializeController(prefab.Object);
-        }
-
-        public override Task UnloadResourcesAsync (string appearance = null)
-        {
-            DisposeResources();
-            return Task.CompletedTask;
-        }
-
         public override void Dispose ()
         {
             base.Dispose();
@@ -133,7 +125,6 @@ namespace Naninovel
         {
             this.position = position;
 
-            InitializeController();
             Transform.position = new Vector3(position.x, charManager.GlobalSceneOrigin.y, position.z);
             var localY = Live2DController.transform.InverseTransformPoint((Vector2)position - charManager.GlobalSceneOrigin).y;
             RenderCamera.transform.localPosition = new Vector3(config.CameraOffset.x, config.CameraOffset.y - localY, config.CameraOffset.z);
@@ -143,7 +134,6 @@ namespace Naninovel
         {
             this.scale = scale;
 
-            InitializeController();
             Live2DController.ModelScale = scale;
         }
 
@@ -153,7 +143,6 @@ namespace Naninovel
 
             if (string.IsNullOrEmpty(appearance)) return;
 
-            InitializeController();
             Live2DController.SetAppearance(appearance);
         }
 
@@ -168,7 +157,6 @@ namespace Naninovel
         {
             this.lookDirection = lookDirection;
 
-            InitializeController();
             Live2DController.SetLookDirection(lookDirection);
         }
 
@@ -181,12 +169,9 @@ namespace Naninovel
             SpriteRenderer.TintColor = tintColor;
         }
 
-        protected virtual void InitializeController (GameObject live2DPrefab = null)
+        protected virtual void InitializeController (GameObject live2DPrefab)
         {
             if (Live2DController) return;
-
-            if (!ObjectUtils.IsValid(live2DPrefab))
-                live2DPrefab = PrefabLoader.Load(Id);
 
             Live2DController = Engine.Instantiate(live2DPrefab, $"{Id} Live2D Renderer")?.GetComponent<Live2DController>();
             Debug.Assert(Live2DController, $"Failed to initialize Live2D controller: {live2DPrefab.name} prefab is invalid or doesn't have {nameof(Naninovel.Live2DController)} component attached to the root object.");
