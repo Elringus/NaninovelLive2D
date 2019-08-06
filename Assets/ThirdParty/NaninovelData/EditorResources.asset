@@ -15,9 +15,9 @@ MonoBehaviour:
   resourceCategories:
   - Id: Backgrounds/5035aeb5-a356-4900-a306-f889bb338346
     Resources:
-    - Name: Road
+    - Name: Snow
       PathPrefix: Backgrounds/MainBackground
-      Guid: b4676406a522fc6438bb7cd4a78d7da6
+      Guid: dbba563865d62fd4795052a9bc21b31d
   - Id: Characters/2c24c719-2ca3-4b64-876a-e658da6e62e8
     Resources:
     - Name: Hiyori
@@ -33,3 +33,8 @@ MonoBehaviour:
     - Name: TestScript
       PathPrefix: Scripts
       Guid: e8d729144a6c4274f8c88b151fa577ea
+  - Id: CharacterAvatars
+    Resources:
+    - Name: Hiyori/Default
+      PathPrefix: CharacterAvatars
+      Guid: 3bf136f11c3fa7347a317fe864e78dec

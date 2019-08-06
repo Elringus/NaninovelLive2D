@@ -1,14 +1,17 @@
+@back Snow wait:false
+@printer Wide
+@fx Snow wait:false
+
 # Start
-@back Road wait:false
-@char Hiyori.Default scale:1
-1
-@char Hiyori.Happy scale:1.5 wait:false
+@char Hiyori pos:50,-25 scale:1.0 visible:false time:0
+@char Hiyori.Default visible:true
+Hiyori: Lorem ipsum dolor sit amet, consectetur adipiscing elit.[i] Ut pretium porta sapien. Vivamus sit amet fermentum nisi. 
+@char Hiyori.Happy scale:1.3 wait:false
 @arrange Hiyori.35
-2
+Hiyori: Nunc sem felis!
 @char Hiyori.Angry wait:false
 @arrange Hiyori.75
-3
-;@char Koharu
-;4
+Hiyori: Cras sed dictum turpis...
 @hideChars
+@hidePrinter
 @goto .Start

@@ -1,4 +1,5 @@
 ﻿using Live2D.Cubism.Framework.LookAt;
+using Live2D.Cubism.Framework.MouthMovement;
 using Live2D.Cubism.Rendering;
 using UnityEngine;
 
@@ -18,12 +19,20 @@ namespace Naninovel
 
         [Tooltip("Whether to make the Live2D model to look at right, left or center, depending on the position on the scene.")]
         [SerializeField] private bool controlLook = true;
+        [Tooltip("Whether to control mouth animation when the character is the author of the currently printed message. The object should have `CubismMouthController` and `CubismMouthParameter` set up for this feature to work.")]
+        [SerializeField] private bool controlMouth = true;
+        [Tooltip("When `Control Mouth` is enabled, this property allows to control how fast the mouth will close and open when the character is speaking.")]
+        [SerializeField] private float mouthAnimationSpeed = 10f;
+        [Tooltip("When `Control Mouth` is enabled, this property limits the amplitude of the mouth openings, in 0.0 to 1.0 range.")]
+        [SerializeField] private float mouthAnimationLimit = .65f;
 
         private Animator animator;
         private CubismRenderController renderController;
         private CubismLookController lookController;
         private CubismLookTargetBehaviour lookTarget;
+        private CubismMouthController mouthController;
         private Transform modelTransform;
+        private bool isSpeaking;
 
         public void SetRenderCamera (Camera camera)
         {
@@ -53,6 +62,8 @@ namespace Naninovel
             }
         }
 
+        public void SetIsSpeaking (bool value) => isSpeaking = value;
+
         private void Awake ()
         {
             modelTransform = transform.Find("Drawables");
@@ -61,6 +72,7 @@ namespace Naninovel
             animator = GetComponent<Animator>();
             renderController = GetComponent<CubismRenderController>();
             lookController = GetComponent<CubismLookController>();
+            mouthController = GetComponent<CubismMouthController>();
 
             if (controlLook)
             {
@@ -71,6 +83,13 @@ namespace Naninovel
             }
 
             renderController.SortingMode = CubismSortingMode.BackToFrontOrder;
+        }
+
+        private void Update ()
+        {
+            if (!controlMouth || mouthController == null) return;
+
+            mouthController.MouthOpening = isSpeaking ? Mathf.Abs(Mathf.Sin(Time.time * mouthAnimationSpeed)) * mouthAnimationLimit : 0f;
         }
     }
 }

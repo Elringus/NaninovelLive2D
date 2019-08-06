@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: EngineConfiguration
   m_EditorClassIdentifier: 
   GeneratedDataPath: ThirdParty/NaninovelData
+  OverrideObjectsLayer: 0
+  ObjectsLayer: 0
   InitializeOnApplicationLoad: 1
   ShowInitializationUI: 1
   CustomInitializationUI: {fileID: 0}
-  OverrideObjectsLayer: 0
-  ObjectsLayer: 0
+  ShowTitleUI: 1
   EnableDevelopmentConsole: 1
   ToggleConsoleKey: 96

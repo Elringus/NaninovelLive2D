@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
+using System.Threading.Tasks;
 using UnityCommon;
 using UnityEngine;
 
@@ -27,27 +28,33 @@ namespace Naninovel
         private const string defaultCameraResource = "Naninovel/RenderCamera";
         private static readonly Vector3 prefabOffset = new Vector3(0, 0, -999);
         private static float distributeXOffset = -999;
-
         private static Live2DConfiguration config;
-        private static CameraManager refCamera;
-        private static CharacterManager charManager;
+
+        private readonly TextPrinterManager textPrinterManager;
+        private readonly CharacterManager characterManager;
+        private readonly CameraManager cameraManager;
+        private readonly Tweener<VectorTween> positionTweener, scaleTweener;
+        private Resource<GameObject> live2DPrefabResource;
         private string appearance;
         private bool isVisible;
         private Vector3 scale = Vector3.one;
         private Vector3 position = Vector3.zero;
-        private Tweener<VectorTween> positionTweener, scaleTweener;
         private CharacterLookDirection lookDirection;
 
         public Live2DCharacter (string id, CharacterMetadata metadata) 
             : base(id, metadata)
         {
             if (!config) config = Configuration.LoadOrDefault<Live2DConfiguration>();
-            if (refCamera is null) refCamera = Engine.GetService<CameraManager>();
-            if (charManager is null) charManager = Engine.GetService<CharacterManager>();
+
+            cameraManager = Engine.GetService<CameraManager>();
+            characterManager = Engine.GetService<CharacterManager>();
+            textPrinterManager = Engine.GetService<TextPrinterManager>();
             positionTweener = new Tweener<VectorTween>(ActorBehaviour);
             scaleTweener = new Tweener<VectorTween>(ActorBehaviour);
 
-            refCamera.OnAspectChanged += UpdateRenderOrthoSize;
+            cameraManager.OnAspectChanged += UpdateRenderOrthoSize;
+            textPrinterManager.OnPrintTextStarted += HandlePrintTextStarted;
+            textPrinterManager.OnPrintTextFinished += HandlePrintTextFinished;
 
             var providerMngr = Engine.GetService<ResourceProviderManager>();
             var localeMngr = Engine.GetService<LocalizationManager>();
@@ -70,42 +77,62 @@ namespace Naninovel
             InitializeController(live2DPrefab);
         }
 
-        public override async Task ChangePositionAsync (Vector3 position, float duration, EasingType easingType = default)
+        public override async Task HoldResourcesAsync (object holder, string appearance)
+        {
+            await base.HoldResourcesAsync(holder, appearance);
+
+            live2DPrefabResource = await PrefabLoader.LoadAsync(Id);
+            if (live2DPrefabResource?.IsValid ?? false)
+                live2DPrefabResource.Hold(holder);
+        }
+
+        public override void ReleaseResources (object holder, string appearance)
+        {
+            base.ReleaseResources(holder, appearance);
+
+            live2DPrefabResource?.Release(holder);
+        }
+
+        public override async Task ChangePositionAsync (Vector3 position, float duration, 
+            EasingType easingType = default, CancellationToken cancellationToken = default)
         {
             CompletePositionTween();
             var curPos = this.position;
             this.position = position;
 
-            //var worldY = Live2DController.transform.TransformPoint(RenderCamera.transform.localPosition - config.CameraOffset).y + charManager.GlobalSceneOrigin.y;
-            //var curPos = new Vector3(Transform.position.x, worldY, Transform.position.z);
             var tween = new VectorTween(curPos, position, duration, SetBehaviourPosition, false, easingType);
-            await positionTweener.RunAsync(tween);
+            await positionTweener.RunAsync(tween, cancellationToken);
+            if (cancellationToken.IsCancellationRequested) return;
             SetBehaviourPosition(position);
         }
 
-        public override async Task ChangeScaleAsync (Vector3 scale, float duration, EasingType easingType = default)
+        public override async Task ChangeScaleAsync (Vector3 scale, float duration, 
+            EasingType easingType = default, CancellationToken cancellationToken = default)
         {
             CompleteScaleTween();
             this.scale = scale;
 
             var tween = new VectorTween(Live2DController.ModelScale, scale, duration, SetBehaviourScale, false, easingType);
-            await scaleTweener.RunAsync(tween);
+            await scaleTweener.RunAsync(tween, cancellationToken);
         }
 
-        public override Task ChangeAppearanceAsync (string appearance, float duration, EasingType easingType = default)
+        public override Task ChangeAppearanceAsync (string appearance, float duration, 
+            EasingType easingType = default, CancellationToken cancellationToken = default)
         {
             SetAppearance(appearance);
             return Task.CompletedTask;
         }
 
-        public override async Task ChangeVisibilityAsync (bool isVisible, float duration, EasingType easingType = default)
+        public override async Task ChangeVisibilityAsync (bool isVisible, float duration, 
+            EasingType easingType = default, CancellationToken cancellationToken = default)
         {
             this.isVisible = isVisible;
 
-            await SpriteRenderer.FadeToAsync(isVisible ? 1 : 0, duration, easingType);
+            await SpriteRenderer.FadeToAsync(isVisible ? 1 : 0, duration, easingType, cancellationToken);
         }
 
-        public Task ChangeLookDirectionAsync (CharacterLookDirection lookDirection, float duration, EasingType easingType = default)
+        public Task ChangeLookDirectionAsync (CharacterLookDirection lookDirection, float duration, 
+            EasingType easingType = default, CancellationToken cancellationToken = default)
         {
             SetLookDirection(lookDirection);
             return Task.CompletedTask;
@@ -115,8 +142,14 @@ namespace Naninovel
         {
             base.Dispose();
 
-            if (refCamera != null)
-                refCamera.OnAspectChanged -= UpdateRenderOrthoSize;
+            if (cameraManager != null)
+                cameraManager.OnAspectChanged -= UpdateRenderOrthoSize;
+
+            if (textPrinterManager != null)
+            {
+                textPrinterManager.OnPrintTextStarted -= HandlePrintTextStarted;
+                textPrinterManager.OnPrintTextFinished -= HandlePrintTextFinished;
+            }
 
             DisposeResources();
         }
@@ -125,8 +158,8 @@ namespace Naninovel
         {
             this.position = position;
 
-            Transform.position = new Vector3(position.x, charManager.GlobalSceneOrigin.y, position.z);
-            var localY = Live2DController.transform.InverseTransformPoint((Vector2)position - charManager.GlobalSceneOrigin).y;
+            Transform.position = new Vector3(position.x, characterManager.GlobalSceneOrigin.y, position.z);
+            var localY = Live2DController.transform.InverseTransformPoint((Vector2)position - characterManager.GlobalSceneOrigin).y;
             RenderCamera.transform.localPosition = new Vector3(config.CameraOffset.x, config.CameraOffset.y - localY, config.CameraOffset.z);
         }
 
@@ -177,10 +210,10 @@ namespace Naninovel
             Debug.Assert(Live2DController, $"Failed to initialize Live2D controller: {live2DPrefab.name} prefab is invalid or doesn't have {nameof(Naninovel.Live2DController)} component attached to the root object.");
             Live2DController.transform.localPosition = Vector3.zero + prefabOffset;
             Live2DController.transform.AddPosX(distributeXOffset); // Distribute concurrently used Live2D prefabs.
-            distributeXOffset += refCamera.ReferenceSize.x + config.CameraOffset.x;
+            distributeXOffset += cameraManager.ReferenceSize.x + config.CameraOffset.x;
             Live2DController.gameObject.ForEachDescendant(g => g.layer = config.RenderLayer);
 
-            var descriptor = new RenderTextureDescriptor((int)refCamera.ReferenceResolution.x, (int)refCamera.ReferenceResolution.y, RenderTextureFormat.Default);
+            var descriptor = new RenderTextureDescriptor((int)cameraManager.ReferenceResolution.x, (int)cameraManager.ReferenceResolution.y, RenderTextureFormat.Default);
             RenderTexture = new RenderTexture(descriptor);
 
             SpriteRenderer.MainTexture = RenderTexture;
@@ -191,7 +224,7 @@ namespace Naninovel
             RenderCamera.transform.localPosition = Vector3.zero + config.CameraOffset;
             RenderCamera.targetTexture = RenderTexture;
             RenderCamera.cullingMask = 1 << config.RenderLayer;
-            RenderCamera.orthographicSize = refCamera.Camera.orthographicSize;
+            RenderCamera.orthographicSize = cameraManager.Camera.orthographicSize;
 
             Live2DController.SetRenderCamera(RenderCamera);
         }
@@ -203,8 +236,6 @@ namespace Naninovel
             if (Live2DController)
                 Object.Destroy(Live2DController.gameObject);
             Live2DController = null;
-            // TODO: Can't unload prefab assets.
-            //PrefabLoader?.UnloadAllAsync();
         }
 
         private void CompletePositionTween ()
@@ -221,7 +252,19 @@ namespace Naninovel
 
         private void UpdateRenderOrthoSize (float aspect)
         {
-            RenderCamera.orthographicSize = refCamera.Camera.orthographicSize;
+            RenderCamera.orthographicSize = cameraManager.Camera.orthographicSize;
+        }
+
+        private void HandlePrintTextStarted (PrintTextArgs args)
+        {
+            if (args.AuthorId == Id)
+                Live2DController.SetIsSpeaking(true);
+        }
+
+        private void HandlePrintTextFinished (PrintTextArgs args)
+        {
+            if (args.AuthorId == Id)
+                Live2DController.SetIsSpeaking(false);
         }
     }
 }
