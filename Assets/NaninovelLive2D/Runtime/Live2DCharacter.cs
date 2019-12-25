@@ -60,7 +60,7 @@ namespace Naninovel
             var localeMngr = Engine.GetService<LocalizationManager>();
             PrefabLoader = new LocalizableResourceLoader<GameObject>(
                 providerMngr.GetProviderList(ResourceProviderType.Project), 
-                localeMngr, metadata.LoaderConfiguration.PathPrefix);
+                localeMngr, metadata.Loader.PathPrefix);
 
             SpriteRenderer = GameObject.AddComponent<TransitionalSpriteRenderer>();
             SpriteRenderer.Pivot = metadata.Pivot;
@@ -117,7 +117,7 @@ namespace Naninovel
         }
 
         public override Task ChangeAppearanceAsync (string appearance, float duration, 
-            EasingType easingType = default, CancellationToken cancellationToken = default)
+            EasingType easingType = EasingType.Linear, TransitionType? transitionType = null, Vector4? transitionParams = null, Texture dissolveTexture = null, CancellationToken cancellationToken = default)
         {
             SetAppearance(appearance);
             return Task.CompletedTask;
