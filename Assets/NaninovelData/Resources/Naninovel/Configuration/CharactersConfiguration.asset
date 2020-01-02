@@ -14,23 +14,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DefaultEasing: 1
   SceneOrigin: {x: 0.5, y: 0}
+  ZOffset: 50
+  ZStep: 0.1
   AutoArrangeOnAdd: 1
   DefaultMetadata:
     Implementation: Naninovel.SpriteCharacter
-    LoaderConfiguration:
+    Loader:
       PathPrefix: Characters
       ProviderTypes: 0000000001000000
     guid: dd8538b5-2667-404c-8c36-58d55b0a6175
     Pivot: {x: 0.5, y: 0}
     PixelsPerUnit: 100
+    EnableDepthPass: 1
+    DepthAlphaCutoff: 0.5
+    CustomShader: {fileID: 0}
     BakedLookDirection: 1
     DisplayName: 
     UseCharacterColor: 0
     NameColor: {r: 1, g: 1, b: 1, a: 1}
     MessageColor: {r: 1, g: 1, b: 1, a: 1}
     HighlightWhenSpeaking: 0
+    HighlightCharacterCount: 0
     SpeakingTint: {r: 1, g: 1, b: 1, a: 1}
     NotSpeakingTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    PlaceOnTop: 1
     HighlightDuration: 0.35
     HighlightEasing: 1
     MessageSound: 
@@ -39,39 +46,51 @@ MonoBehaviour:
     - Hiyori
     - Kohaku
     metas:
-    - Implementation: Naninovel.Live2DCharacter
-      LoaderConfiguration:
+    - Implementation: Naninovel.Live2DCharacter, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      Loader:
         PathPrefix: Characters
         ProviderTypes: 0000000001000000
       guid: 2c24c719-2ca3-4b64-876a-e658da6e62e8
       Pivot: {x: 0.5, y: 0}
       PixelsPerUnit: 100
+      EnableDepthPass: 1
+      DepthAlphaCutoff: 0.5
+      CustomShader: {fileID: 0}
       BakedLookDirection: 1
       DisplayName: 
       UseCharacterColor: 1
       NameColor: {r: 0.5613208, g: 0.69352555, b: 1, a: 1}
       MessageColor: {r: 0.882353, g: 0.9176471, b: 1, a: 1}
       HighlightWhenSpeaking: 0
+      HighlightCharacterCount: 0
       SpeakingTint: {r: 1, g: 1, b: 1, a: 1}
       NotSpeakingTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+      PlaceOnTop: 1
       HighlightDuration: 0.35
       HighlightEasing: 1
       MessageSound: 
-    - Implementation: Naninovel.SpriteCharacter
-      LoaderConfiguration:
+    - Implementation: Naninovel.SpriteCharacter, Elringus.Naninovel.Runtime, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      Loader:
         PathPrefix: Characters
         ProviderTypes: 0000000001000000
       guid: 93c36852-dc49-430f-80d1-518401a5d775
       Pivot: {x: 0.5, y: 0}
       PixelsPerUnit: 100
+      EnableDepthPass: 1
+      DepthAlphaCutoff: 0.5
+      CustomShader: {fileID: 0}
       BakedLookDirection: 1
       DisplayName: 
       UseCharacterColor: 0
       NameColor: {r: 1, g: 1, b: 1, a: 1}
       MessageColor: {r: 1, g: 1, b: 1, a: 1}
       HighlightWhenSpeaking: 0
+      HighlightCharacterCount: 0
       SpeakingTint: {r: 1, g: 1, b: 1, a: 1}
       NotSpeakingTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+      PlaceOnTop: 1
       HighlightDuration: 0.35
       HighlightEasing: 1
       MessageSound: 

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityCommon;
 using UnityEngine;
@@ -11,10 +12,10 @@ namespace Naninovel
     /// <remarks>
     /// Live2D character prefab should have a <see cref="Naninovel.Live2DController"/> components attached to the root object.
     /// </remarks>
-    public class Live2DCharacter : MonoBehaviourActor, ICharacterActor
+    public class Live2DCharacter : MonoBehaviourActor, ICharacterActor, Commands.LipSync.IReceiver
     {
         public override string Appearance { get => appearance; set => SetAppearance(value); }
-        public override bool IsVisible { get => isVisible; set => SetVisibility(value); }
+        public override bool Visible { get => visible; set => SetVisibility(value); }
         public override Vector3 Position { get => position; set { CompletePositionTween(); SetBehaviourPosition(value); } }
         public override Vector3 Scale { get => scale; set { CompleteScaleTween(); SetBehaviourScale(value); } }
         public CharacterLookDirection LookDirection { get => lookDirection; set => SetLookDirection(value); }
@@ -30,36 +31,41 @@ namespace Naninovel
         private static float distributeXOffset = -999;
         private static Live2DConfiguration config;
 
-        private readonly TextPrinterManager textPrinterManager;
-        private readonly CharacterManager characterManager;
-        private readonly CameraManager cameraManager;
+        private readonly ITextPrinterManager textPrinterManager;
+        private readonly ICharacterManager characterManager;
+        private readonly ICameraManager cameraManager;
+        private readonly CameraConfiguration cameraConfig;
+        private readonly CharactersConfiguration charsConfig;
         private readonly Tweener<VectorTween> positionTweener, scaleTweener;
         private Resource<GameObject> live2DPrefabResource;
         private string appearance;
-        private bool isVisible;
+        private bool visible;
         private Vector3 scale = Vector3.one;
         private Vector3 position = Vector3.zero;
         private CharacterLookDirection lookDirection;
+        private bool lipSyncAllowed = true;
 
         public Live2DCharacter (string id, CharacterMetadata metadata) 
             : base(id, metadata)
         {
             if (!config) config = Configuration.LoadOrDefault<Live2DConfiguration>();
 
-            cameraManager = Engine.GetService<CameraManager>();
-            characterManager = Engine.GetService<CharacterManager>();
-            textPrinterManager = Engine.GetService<TextPrinterManager>();
+            cameraManager = Engine.GetService<ICameraManager>();
+            characterManager = Engine.GetService<ICharacterManager>();
+            textPrinterManager = Engine.GetService<ITextPrinterManager>();
             positionTweener = new Tweener<VectorTween>(ActorBehaviour);
             scaleTweener = new Tweener<VectorTween>(ActorBehaviour);
+            cameraConfig = Configuration.LoadOrDefault<CameraConfiguration>();
+            charsConfig = Configuration.LoadOrDefault<CharactersConfiguration>();
 
             cameraManager.OnAspectChanged += UpdateRenderOrthoSize;
             textPrinterManager.OnPrintTextStarted += HandlePrintTextStarted;
             textPrinterManager.OnPrintTextFinished += HandlePrintTextFinished;
 
-            var providerMngr = Engine.GetService<ResourceProviderManager>();
-            var localeMngr = Engine.GetService<LocalizationManager>();
+            var providerMngr = Engine.GetService<IResourceProviderManager>();
+            var localeMngr = Engine.GetService<ILocalizationManager>();
             PrefabLoader = new LocalizableResourceLoader<GameObject>(
-                providerMngr.GetProviderList(ResourceProviderType.Project), 
+                providerMngr.GetProviders(new List<ResourceProviderType> { ResourceProviderType.Project }), 
                 localeMngr, metadata.Loader.PathPrefix);
 
             SpriteRenderer = GameObject.AddComponent<TransitionalSpriteRenderer>();
@@ -126,7 +132,7 @@ namespace Naninovel
         public override async Task ChangeVisibilityAsync (bool isVisible, float duration, 
             EasingType easingType = default, CancellationToken cancellationToken = default)
         {
-            this.isVisible = isVisible;
+            this.visible = isVisible;
 
             await SpriteRenderer.FadeToAsync(isVisible ? 1 : 0, duration, easingType, cancellationToken);
         }
@@ -154,12 +160,18 @@ namespace Naninovel
             DisposeResources();
         }
 
+        public void AllowLipSync (bool active)
+        {
+            lipSyncAllowed = active;
+        }
+
         protected override void SetBehaviourPosition (Vector3 position)
         {
             this.position = position;
 
-            Transform.position = new Vector3(position.x, characterManager.GlobalSceneOrigin.y, position.z);
-            var localY = Live2DController.transform.InverseTransformPoint((Vector2)position - characterManager.GlobalSceneOrigin).y;
+            var globalSceneOrigin = cameraConfig.SceneToWorldSpace(charsConfig.SceneOrigin);
+            Transform.position = new Vector3(position.x, globalSceneOrigin.y, position.z);
+            var localY = Live2DController.transform.InverseTransformPoint((Vector2)position - globalSceneOrigin).y;
             RenderCamera.transform.localPosition = new Vector3(config.CameraOffset.x, config.CameraOffset.y - localY, config.CameraOffset.z);
         }
 
@@ -181,7 +193,7 @@ namespace Naninovel
 
         protected virtual void SetVisibility (bool isVisible)
         {
-            this.isVisible = isVisible;
+            this.visible = isVisible;
 
             SpriteRenderer.Opacity = isVisible ? 1 : 0;
         }
@@ -197,7 +209,7 @@ namespace Naninovel
 
         protected override void SetBehaviourTintColor (Color tintColor)
         {
-            if (!IsVisible) // Handle visibility-controlled alpha of the tint color.
+            if (!Visible) // Handle visibility-controlled alpha of the tint color.
                 tintColor.a = SpriteRenderer.TintColor.a;
             SpriteRenderer.TintColor = tintColor;
         }
@@ -206,14 +218,16 @@ namespace Naninovel
         {
             if (Live2DController) return;
 
-            Live2DController = Engine.Instantiate(live2DPrefab, $"{Id} Live2D Renderer")?.GetComponent<Live2DController>();
+            var prefab = Engine.Instantiate(live2DPrefab, $"{Id} Live2D Renderer");
+            if (ObjectUtils.IsValid(prefab))
+                Live2DController = prefab.GetComponent<Live2DController>();
             Debug.Assert(Live2DController, $"Failed to initialize Live2D controller: {live2DPrefab.name} prefab is invalid or doesn't have {nameof(Naninovel.Live2DController)} component attached to the root object.");
             Live2DController.transform.localPosition = Vector3.zero + prefabOffset;
             Live2DController.transform.AddPosX(distributeXOffset); // Distribute concurrently used Live2D prefabs.
-            distributeXOffset += cameraManager.ReferenceSize.x + config.CameraOffset.x;
+            distributeXOffset += cameraConfig.ReferenceSize.x + config.CameraOffset.x;
             Live2DController.gameObject.ForEachDescendant(g => g.layer = config.RenderLayer);
 
-            var descriptor = new RenderTextureDescriptor((int)cameraManager.ReferenceResolution.x, (int)cameraManager.ReferenceResolution.y, RenderTextureFormat.Default);
+            var descriptor = new RenderTextureDescriptor(cameraConfig.ReferenceResolution.x, cameraConfig.ReferenceResolution.y, RenderTextureFormat.Default);
             RenderTexture = new RenderTexture(descriptor);
 
             SpriteRenderer.MainTexture = RenderTexture;
@@ -257,7 +271,7 @@ namespace Naninovel
 
         private void HandlePrintTextStarted (PrintTextArgs args)
         {
-            if (args.AuthorId == Id)
+            if (lipSyncAllowed && args.AuthorId == Id)
                 Live2DController.SetIsSpeaking(true);
         }
 
