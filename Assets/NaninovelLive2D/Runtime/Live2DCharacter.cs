@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using UnityCommon;
 using UnityEngine;
 
 namespace Naninovel
@@ -123,7 +122,7 @@ namespace Naninovel
         }
 
         public override Task ChangeAppearanceAsync (string appearance, float duration, 
-            EasingType easingType = EasingType.Linear, TransitionType? transitionType = null, Vector4? transitionParams = null, Texture dissolveTexture = null, CancellationToken cancellationToken = default)
+            EasingType easingType = EasingType.Linear, Transition? transition = default, CancellationToken cancellationToken = default)
         {
             SetAppearance(appearance);
             return Task.CompletedTask;
