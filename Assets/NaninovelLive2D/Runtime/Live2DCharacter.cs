@@ -253,13 +253,13 @@ namespace Naninovel
 
         private void CompletePositionTween ()
         {
-            if (positionTweener.IsRunning)
+            if (positionTweener.Running)
                 positionTweener.CompleteInstantly();
         }
 
         private void CompleteScaleTween ()
         {
-            if (scaleTweener.IsRunning)
+            if (scaleTweener.Running)
                 scaleTweener.CompleteInstantly();
         }
 
