@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
+using UniRx.Async;
 using UnityEngine;
 
 namespace Naninovel
@@ -74,7 +74,7 @@ namespace Naninovel
             SetVisibility(false);
         }
 
-        public override async Task InitializeAsync ()
+        public override async UniTask InitializeAsync ()
         {
             await base.InitializeAsync();
 
@@ -82,7 +82,7 @@ namespace Naninovel
             InitializeController(live2DPrefab);
         }
 
-        public override async Task HoldResourcesAsync (object holder, string appearance)
+        public override async UniTask HoldResourcesAsync (object holder, string appearance)
         {
             await base.HoldResourcesAsync(holder, appearance);
 
@@ -98,7 +98,7 @@ namespace Naninovel
             live2DPrefabResource?.Release(holder);
         }
 
-        public override async Task ChangePositionAsync (Vector3 position, float duration, 
+        public override async UniTask ChangePositionAsync (Vector3 position, float duration, 
             EasingType easingType = default, CancellationToken cancellationToken = default)
         {
             CompletePositionTween();
@@ -111,7 +111,7 @@ namespace Naninovel
             SetBehaviourPosition(position);
         }
 
-        public override async Task ChangeScaleAsync (Vector3 scale, float duration, 
+        public override async UniTask ChangeScaleAsync (Vector3 scale, float duration, 
             EasingType easingType = default, CancellationToken cancellationToken = default)
         {
             CompleteScaleTween();
@@ -121,14 +121,14 @@ namespace Naninovel
             await scaleTweener.RunAsync(tween, cancellationToken);
         }
 
-        public override Task ChangeAppearanceAsync (string appearance, float duration, 
+        public override UniTask ChangeAppearanceAsync (string appearance, float duration, 
             EasingType easingType = EasingType.Linear, Transition? transition = default, CancellationToken cancellationToken = default)
         {
             SetAppearance(appearance);
-            return Task.CompletedTask;
+            return UniTask.CompletedTask;
         }
 
-        public override async Task ChangeVisibilityAsync (bool isVisible, float duration, 
+        public override async UniTask ChangeVisibilityAsync (bool isVisible, float duration, 
             EasingType easingType = default, CancellationToken cancellationToken = default)
         {
             this.visible = isVisible;
@@ -136,11 +136,11 @@ namespace Naninovel
             await SpriteRenderer.FadeToAsync(isVisible ? 1 : 0, duration, easingType, cancellationToken);
         }
 
-        public Task ChangeLookDirectionAsync (CharacterLookDirection lookDirection, float duration, 
+        public UniTask ChangeLookDirectionAsync (CharacterLookDirection lookDirection, float duration, 
             EasingType easingType = default, CancellationToken cancellationToken = default)
         {
             SetLookDirection(lookDirection);
-            return Task.CompletedTask;
+            return UniTask.CompletedTask;
         }
 
         public override void Dispose ()
