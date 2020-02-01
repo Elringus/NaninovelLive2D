@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.elringus.unitask": "https://github.com/Elringus/UniTask.git#package",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.2d.tilemap": "1.0.0",
     "com.unity.ext.nunit": "1.0.0",
@@ -39,11 +38,5 @@
     "com.unity.modules.vr": "1.0.0",
     "com.unity.modules.wind": "1.0.0",
     "com.unity.modules.xr": "1.0.0"
-  },
-  "lock": {
-    "com.elringus.unitask": {
-      "revision": "package",
-      "hash": "5fae3e70c1b78237cbe63a38f75fc04a2392dd40"
-    }
   }
 }
