@@ -1,6 +1,6 @@
 @back Snow wait:false
 @printer Wide
-@fx Snow wait:false
+@spawn Snow wait:false
 
 # Start
 @char Hiyori pos:50,-25 scale:1.0 visible:false time:0

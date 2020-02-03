@@ -15,11 +15,24 @@ MonoBehaviour:
   Loader:
     PathPrefix: Scripts
     ProviderTypes: 0000000001000000
-  StartGameScript: TestScript
+  InitializationScript: 
+  TitleScript: 
+  StartGameScript: 
+  AutoAddScripts: 1
+  HotReloadScripts: 1
+  CountTotalCommands: 0
+  EnableVisualEditor: 1
+  HideUnusedParameters: 1
+  InsertLineKey: 32
+  InsertLineModifier: 2
+  SaveScriptKey: 115
+  SaveScriptModifier: 2
+  VisualEditorPageLength: 1000
+  CustomStyleSheet: {fileID: 0}
   EnableCommunityModding: 0
   ExternalLoader:
     PathPrefix: Scripts
-    ProviderTypes: 01000000
+    ProviderTypes: 02000000
   EnableNavigator: 1
   ShowNavigatorOnInit: 0
   NavigatorSortOrder: 900

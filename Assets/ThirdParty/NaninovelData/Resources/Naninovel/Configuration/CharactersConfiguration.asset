@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: CharactersConfiguration
   m_EditorClassIdentifier: 
   DefaultEasing: 1
+  AutoShowOnModify: 1
   SceneOrigin: {x: 0.5, y: 0}
   ZOffset: 50
   ZStep: 0.1
   AutoArrangeOnAdd: 1
   DefaultMetadata:
-    Implementation: Naninovel.SpriteCharacter
+    Implementation: Naninovel.SpriteCharacter, Elringus.Naninovel.Runtime, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
     Loader:
       PathPrefix: Characters
       ProviderTypes: 0000000001000000
-    guid: dd8538b5-2667-404c-8c36-58d55b0a6175
+    guid: 8e564fef-7489-4f3c-9002-fbf103cf1cfa
     Pivot: {x: 0.5, y: 0}
     PixelsPerUnit: 100
     EnableDepthPass: 1
@@ -41,17 +43,18 @@ MonoBehaviour:
     HighlightDuration: 0.35
     HighlightEasing: 1
     MessageSound: 
+    LinkedPrinter: 
+    Poses: []
   Metadata:
     ids:
     - Hiyori
-    - Kohaku
     metas:
     - Implementation: Naninovel.Live2DCharacter, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
       Loader:
         PathPrefix: Characters
         ProviderTypes: 0000000001000000
-      guid: 2c24c719-2ca3-4b64-876a-e658da6e62e8
+      guid: b8fe3311-f675-4931-a75f-c7f9f0ddc23b
       Pivot: {x: 0.5, y: 0}
       PixelsPerUnit: 100
       EnableDepthPass: 1
@@ -60,8 +63,8 @@ MonoBehaviour:
       BakedLookDirection: 1
       DisplayName: 
       UseCharacterColor: 1
-      NameColor: {r: 0.5613208, g: 0.69352555, b: 1, a: 1}
-      MessageColor: {r: 0.882353, g: 0.9176471, b: 1, a: 1}
+      NameColor: {r: 0.28773582, g: 0.7510815, b: 1, a: 1}
+      MessageColor: {r: 0.8726415, g: 0.9559144, b: 1, a: 1}
       HighlightWhenSpeaking: 0
       HighlightCharacterCount: 0
       SpeakingTint: {r: 1, g: 1, b: 1, a: 1}
@@ -70,30 +73,8 @@ MonoBehaviour:
       HighlightDuration: 0.35
       HighlightEasing: 1
       MessageSound: 
-    - Implementation: Naninovel.SpriteCharacter, Elringus.Naninovel.Runtime, Version=0.0.0.0,
-        Culture=neutral, PublicKeyToken=null
-      Loader:
-        PathPrefix: Characters
-        ProviderTypes: 0000000001000000
-      guid: 93c36852-dc49-430f-80d1-518401a5d775
-      Pivot: {x: 0.5, y: 0}
-      PixelsPerUnit: 100
-      EnableDepthPass: 1
-      DepthAlphaCutoff: 0.5
-      CustomShader: {fileID: 0}
-      BakedLookDirection: 1
-      DisplayName: 
-      UseCharacterColor: 0
-      NameColor: {r: 1, g: 1, b: 1, a: 1}
-      MessageColor: {r: 1, g: 1, b: 1, a: 1}
-      HighlightWhenSpeaking: 0
-      HighlightCharacterCount: 0
-      SpeakingTint: {r: 1, g: 1, b: 1, a: 1}
-      NotSpeakingTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-      PlaceOnTop: 1
-      HighlightDuration: 0.35
-      HighlightEasing: 1
-      MessageSound: 
+      LinkedPrinter: 
+      Poses: []
   AvatarLoader:
     PathPrefix: CharacterAvatars
     ProviderTypes: 0000000001000000

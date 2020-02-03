@@ -13,8 +13,13 @@ MonoBehaviour:
   m_Name: CameraConfiguration
   m_EditorClassIdentifier: 
   ReferenceResolution: {x: 1920, y: 1080}
+  AutoCorrectOrthoSize: 1
+  DefaultOrthoSize: 5.35
   InitialPosition: {x: 0, y: 0, z: -10}
-  BackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
-  RenderTexture: {fileID: 0}
+  Orthographic: 1
+  CustomCameraPrefab: {fileID: 0}
+  UseUICamera: 1
+  CustomUICameraPrefab: {fileID: 0}
+  DefaultEasing: 0
   ThumbnailResolution: {x: 240, y: 140}
   HideUIInThumbnails: 0
