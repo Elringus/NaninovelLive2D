@@ -17,7 +17,7 @@ MonoBehaviour:
     ProviderTypes: 0000000001000000
   InitializationScript: 
   TitleScript: 
-  StartGameScript: 
+  StartGameScript: TestScript
   AutoAddScripts: 1
   HotReloadScripts: 1
   CountTotalCommands: 0
