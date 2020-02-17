@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9923ea28fd9a6e42b78e041d93bb35f, type: 3}
   m_Name: EngineConfiguration
   m_EditorClassIdentifier: 
-  GeneratedDataPath: NaninovelData
+  GeneratedDataPath: ThirdParty/NaninovelData
   OverrideObjectsLayer: 0
   ObjectsLayer: 0
   InitializeOnApplicationLoad: 1

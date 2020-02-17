@@ -52,8 +52,8 @@ namespace Naninovel
             cameraManager = Engine.GetService<ICameraManager>();
             characterManager = Engine.GetService<ICharacterManager>();
             textPrinterManager = Engine.GetService<ITextPrinterManager>();
-            positionTweener = new Tweener<VectorTween>(ActorBehaviour);
-            scaleTweener = new Tweener<VectorTween>(ActorBehaviour);
+            positionTweener = new Tweener<VectorTween>();
+            scaleTweener = new Tweener<VectorTween>();
             cameraConfig = Configuration.LoadOrDefault<CameraConfiguration>();
             charsConfig = Configuration.LoadOrDefault<CharactersConfiguration>();
 
@@ -166,6 +166,8 @@ namespace Naninovel
 
         protected override void SetBehaviourPosition (Vector3 position)
         {
+            if (!Transform || !RenderCamera || !Live2DController) return;
+
             this.position = position;
 
             var globalSceneOrigin = cameraConfig.SceneToWorldSpace(charsConfig.SceneOrigin);
@@ -176,6 +178,8 @@ namespace Naninovel
 
         protected override void SetBehaviourScale (Vector3 scale)
         {
+            if (!Live2DController) return;
+
             this.scale = scale;
 
             Live2DController.ModelScale = scale;
@@ -208,6 +212,8 @@ namespace Naninovel
 
         protected override void SetBehaviourTintColor (Color tintColor)
         {
+            if (!SpriteRenderer) return;
+
             if (!Visible) // Handle visibility-controlled alpha of the tint color.
                 tintColor.a = SpriteRenderer.TintColor.a;
             SpriteRenderer.TintColor = tintColor;
