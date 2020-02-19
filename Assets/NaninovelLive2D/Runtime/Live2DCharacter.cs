@@ -63,9 +63,7 @@ namespace Naninovel
 
             var providerMngr = Engine.GetService<IResourceProviderManager>();
             var localeMngr = Engine.GetService<ILocalizationManager>();
-            PrefabLoader = new LocalizableResourceLoader<GameObject>(
-                providerMngr.GetProviders(new List<ResourceProviderType> { ResourceProviderType.Project }), 
-                localeMngr, metadata.Loader.PathPrefix);
+            PrefabLoader = metadata.Loader.CreateLocalizableFor<GameObject>(providerMngr, localeMngr);
 
             SpriteRenderer = GameObject.AddComponent<TransitionalSpriteRenderer>();
             SpriteRenderer.Pivot = metadata.Pivot;

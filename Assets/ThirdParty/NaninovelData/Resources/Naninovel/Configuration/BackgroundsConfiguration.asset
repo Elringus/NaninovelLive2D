@@ -22,7 +22,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
     Loader:
       PathPrefix: Backgrounds
-      ProviderTypes: 0000000001000000
+      ProviderTypes: []
     guid: dd664892-b0bc-46f4-bf0a-07c33788fade
     Pivot: {x: 0.5, y: 0.5}
     PixelsPerUnit: 100
@@ -38,7 +38,11 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
       Loader:
         PathPrefix: Backgrounds
-        ProviderTypes: 0000000001000000
+        ProviderTypes:
+        - Naninovel.AddressableResourceProvider, Elringus.Naninovel.Runtime, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        - Naninovel.ProjectResourceProvider, Elringus.Naninovel.Runtime, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
       guid: e380fb47-2fc4-4531-ac56-5bdc5a6f1e3a
       Pivot: {x: 0.5, y: 0.5}
       PixelsPerUnit: 100
