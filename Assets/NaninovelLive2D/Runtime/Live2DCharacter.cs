@@ -47,15 +47,15 @@ namespace Naninovel
         public Live2DCharacter (string id, CharacterMetadata metadata) 
             : base(id, metadata)
         {
-            if (!config) config = Configuration.LoadOrDefault<Live2DConfiguration>();
+            if (!config) config = Engine.GetConfiguration<Live2DConfiguration>();
 
             cameraManager = Engine.GetService<ICameraManager>();
             characterManager = Engine.GetService<ICharacterManager>();
             textPrinterManager = Engine.GetService<ITextPrinterManager>();
             positionTweener = new Tweener<VectorTween>();
             scaleTweener = new Tweener<VectorTween>();
-            cameraConfig = Configuration.LoadOrDefault<CameraConfiguration>();
-            charsConfig = Configuration.LoadOrDefault<CharactersConfiguration>();
+            cameraConfig = Engine.GetConfiguration<CameraConfiguration>();
+            charsConfig = Engine.GetConfiguration<CharactersConfiguration>();
 
             cameraManager.OnAspectChanged += UpdateRenderOrthoSize;
             textPrinterManager.OnPrintTextStarted += HandlePrintTextStarted;
