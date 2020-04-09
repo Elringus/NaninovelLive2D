@@ -1,4 +1,4 @@
-%YAML 1.1
+﻿%YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
 --- !u!114 &11400000
 MonoBehaviour:
@@ -167,95 +167,95 @@ MonoBehaviour:
     - Name: TestScript
       PathPrefix: Scripts
       Guid: e8d729144a6c4274f8c88b151fa577ea
-  - Id: Naninovel/UI
+  - Id: UI
     Resources:
     - Name: ClickThroughPanel
-      PathPrefix: Naninovel/UI
+      PathPrefix: UI
       Guid: 702c32b2de0c0784b9a66ec90601874f
     - Name: IBacklogUI
-      PathPrefix: Naninovel/UI
+      PathPrefix: UI
       Guid: 7fba909c66b25324cb77db18679c2c96
     - Name: ICGGalleryUI
-      PathPrefix: Naninovel/UI
+      PathPrefix: UI
       Guid: 71da50c8dae82bd42ba67528804e820c
     - Name: IConfirmationUI
-      PathPrefix: Naninovel/UI
+      PathPrefix: UI
       Guid: 88d03f19bcbff914ba33a7c9895e2d7c
     - Name: IContinueInputUI
-      PathPrefix: Naninovel/UI
+      PathPrefix: UI
       Guid: 1add671f8348e8443bcc56290e82fc5e
     - Name: IExternalScriptsUI
-      PathPrefix: Naninovel/UI
+      PathPrefix: UI
       Guid: 671ceb4f549ddf046913d7debf113469
     - Name: ILoadingUI
-      PathPrefix: Naninovel/UI
+      PathPrefix: UI
       Guid: 53aad00e5cf184e458adb001c550518a
     - Name: IMovieUI
-      PathPrefix: Naninovel/UI
+      PathPrefix: UI
       Guid: f9a211517d1cb1a44964dc2254463049
     - Name: IPauseUI
-      PathPrefix: Naninovel/UI
+      PathPrefix: UI
       Guid: 480f5db62ea305c46b89a86496d2a0c9
     - Name: IRollbackUI
-      PathPrefix: Naninovel/UI
+      PathPrefix: UI
       Guid: a32c73a3aff4b274c85b3ff16c854b07
     - Name: ISaveLoadUI
-      PathPrefix: Naninovel/UI
+      PathPrefix: UI
       Guid: 8d53726b3d08433479398f02b4780e7f
     - Name: ISceneTransitionUI
-      PathPrefix: Naninovel/UI
+      PathPrefix: UI
       Guid: e3b234b4273b7f64ab3f1d9fe425ed23
     - Name: ISettingsUI
-      PathPrefix: Naninovel/UI
+      PathPrefix: UI
       Guid: 65c37f59e9b266f468dd5381fdc03fc3
     - Name: ITipsUI
-      PathPrefix: Naninovel/UI
+      PathPrefix: UI
       Guid: f5aae572225ee1b4c96d1a17fc5cb073
     - Name: ITitleUI
-      PathPrefix: Naninovel/UI
+      PathPrefix: UI
       Guid: 4b121aa1be1b7e04480b452c595ff17a
     - Name: IVariableInputUI
-      PathPrefix: Naninovel/UI
+      PathPrefix: UI
       Guid: bb95f484e341dcd4391a572f22b7d067
-  - Id: Naninovel/TextPrinters/ab0106ea-dca0-4b89-a519-1c79c054b186
+  - Id: TextPrinters/ab0106ea-dca0-4b89-a519-1c79c054b186
     Resources:
     - Name: Wide
-      PathPrefix: Naninovel/TextPrinters
+      PathPrefix: TextPrinters
       Guid: 781828b806deb1e4cbf50ef9de41da10
-  - Id: Naninovel/TextPrinters/e1f2e528-459f-433f-ab74-4fe2b1c01a5a
+  - Id: TextPrinters/e1f2e528-459f-433f-ab74-4fe2b1c01a5a
     Resources:
     - Name: Dialogue
-      PathPrefix: Naninovel/TextPrinters
+      PathPrefix: TextPrinters
       Guid: 1bc08ccd31adff6439e97161aa6e1d8b
-  - Id: Naninovel/Spawn
+  - Id: Spawn
     Resources:
     - Name: Animate
-      PathPrefix: Naninovel/Spawn
+      PathPrefix: Spawn
       Guid: 7bf06fa813bb9c34daf521998fa72ab1
     - Name: DepthOfField
-      PathPrefix: Naninovel/Spawn
+      PathPrefix: Spawn
       Guid: ea76638b26a915946b62907dd1e776fd
     - Name: DigitalGlitch
-      PathPrefix: Naninovel/Spawn
+      PathPrefix: Spawn
       Guid: be75a73ecccb90b4caa5c14edb9ac467
     - Name: Rain
-      PathPrefix: Naninovel/Spawn
+      PathPrefix: Spawn
       Guid: a9117e2fa90704d45b3e1461596c11ee
     - Name: ShakeBackground
-      PathPrefix: Naninovel/Spawn
+      PathPrefix: Spawn
       Guid: 9f56c556ba32fd54fae62347c25a8145
     - Name: ShakeCamera
-      PathPrefix: Naninovel/Spawn
+      PathPrefix: Spawn
       Guid: 1c5b86cf3cfbb1f44ae5641699077da4
     - Name: ShakeCharacter
-      PathPrefix: Naninovel/Spawn
+      PathPrefix: Spawn
       Guid: 1224d69e1592d624cbde93d0f7383d91
     - Name: ShakePrinter
-      PathPrefix: Naninovel/Spawn
+      PathPrefix: Spawn
       Guid: 2795040988e866646801c80024c50be1
     - Name: Snow
-      PathPrefix: Naninovel/Spawn
+      PathPrefix: Spawn
       Guid: 9f4e71cb27fffa04486737d2cf8d622d
     - Name: SunShafts
-      PathPrefix: Naninovel/Spawn
+      PathPrefix: Spawn
       Guid: c4bf810b9b6cc9f44a58fd670678ded4

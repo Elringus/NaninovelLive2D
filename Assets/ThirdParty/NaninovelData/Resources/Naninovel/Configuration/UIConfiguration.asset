@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: UIConfiguration
   m_EditorClassIdentifier: 
   Loader:
-    PathPrefix: Naninovel/UI
+    PathPrefix: UI
     ProviderTypes:
     - Naninovel.AddressableResourceProvider, Elringus.Naninovel.Runtime, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
