@@ -170,7 +170,7 @@ namespace Naninovel
 
             var globalSceneOrigin = cameraConfig.SceneToWorldSpace(charsConfig.SceneOrigin);
             Transform.position = new Vector3(position.x, globalSceneOrigin.y, position.z);
-            var localY = Live2DController.transform.InverseTransformPoint((Vector2)position - globalSceneOrigin).y;
+            var localY = Live2DController.transform.InverseTransformPoint(position - globalSceneOrigin).y;
             RenderCamera.transform.localPosition = new Vector3(config.CameraOffset.x, config.CameraOffset.y - localY, config.CameraOffset.z);
         }
 
