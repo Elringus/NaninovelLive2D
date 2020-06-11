@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using System.Threading;
 using UniRx.Async;
 using UnityEngine;
@@ -76,7 +76,8 @@ namespace Naninovel
         {
             await base.InitializeAsync();
 
-            var live2DPrefab = await PrefabLoader.LoadAsync(Id);
+            var live2DPrefabs = await PrefabLoader.LoadAllAsync(Id);
+            var live2DPrefab = live2DPrefabs.FirstOrDefault();
             InitializeController(live2DPrefab);
         }
 
