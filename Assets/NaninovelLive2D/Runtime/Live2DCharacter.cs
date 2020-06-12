@@ -85,7 +85,8 @@ namespace Naninovel
         {
             await base.HoldResourcesAsync(holder, appearance);
 
-            live2DPrefabResource = await PrefabLoader.LoadAsync(Id);
+            var live2DPrefabs = await PrefabLoader.LoadAllAsync(Id);
+            live2DPrefabResource = live2DPrefabs.FirstOrDefault();
             if (live2DPrefabResource?.IsValid ?? false)
                 live2DPrefabResource.Hold(holder);
         }
