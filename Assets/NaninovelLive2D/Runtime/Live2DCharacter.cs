@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using System.Threading;
 using UniRx.Async;
 using UnityEngine;
 
@@ -87,7 +86,7 @@ namespace Naninovel
 
             var live2DPrefabs = await PrefabLoader.LoadAllAsync(Id);
             live2DPrefabResource = live2DPrefabs.FirstOrDefault();
-            if (live2DPrefabResource?.IsValid ?? false)
+            if (live2DPrefabResource?.Valid ?? false)
                 live2DPrefabResource.Hold(holder);
         }
 
