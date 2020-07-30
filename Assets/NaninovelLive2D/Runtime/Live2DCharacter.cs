@@ -32,6 +32,7 @@ namespace Naninovel
         private readonly ITextPrinterManager textPrinterManager;
         private readonly ICharacterManager characterManager;
         private readonly ICameraManager cameraManager;
+        private readonly IAudioManager audioManager;
         private readonly CameraConfiguration cameraConfig;
         private readonly CharactersConfiguration charsConfig;
         private readonly Tweener<VectorTween> positionTweener, scaleTweener;
@@ -51,6 +52,7 @@ namespace Naninovel
             cameraManager = Engine.GetService<ICameraManager>();
             characterManager = Engine.GetService<ICharacterManager>();
             textPrinterManager = Engine.GetService<ITextPrinterManager>();
+            audioManager = Engine.GetService<IAudioManager>();
             positionTweener = new Tweener<VectorTween>();
             scaleTweener = new Tweener<VectorTween>();
             cameraConfig = Engine.GetConfiguration<CameraConfiguration>();
@@ -275,14 +277,31 @@ namespace Naninovel
 
         private void HandlePrintTextStarted (PrintTextArgs args)
         {
-            if (lipSyncAllowed && args.AuthorId == Id)
-                Live2DController.SetIsSpeaking(true);
+            if (!lipSyncAllowed || args.AuthorId != Id) return;
+
+            Live2DController.SetIsSpeaking(true);
+
+            var playedVoicePath = audioManager.GetPlayedVoicePath();
+            if (!string.IsNullOrEmpty(playedVoicePath))
+            {
+                var track = audioManager.GetVoiceTrack(playedVoicePath);
+                track.OnStop -= HandleVoiceClipStopped;
+                track.OnStop += HandleVoiceClipStopped;
+            }
+            else textPrinterManager.OnPrintTextFinished += HandlePrintTextFinished;
         }
 
         private void HandlePrintTextFinished (PrintTextArgs args)
         {
-            if (args.AuthorId == Id)
-                Live2DController.SetIsSpeaking(false);
+            if (args.AuthorId != Id) return;
+
+            Live2DController.SetIsSpeaking(false);
+            textPrinterManager.OnPrintTextFinished -= HandlePrintTextFinished;
+        }
+
+        private void HandleVoiceClipStopped ()
+        {
+            Live2DController.SetIsSpeaking(false);
         }
     }
 }
