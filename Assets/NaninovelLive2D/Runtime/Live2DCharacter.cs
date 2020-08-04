@@ -118,6 +118,7 @@ namespace Naninovel
             CompleteScaleTween();
             this.scale = scale;
 
+            if (!ObjectUtils.IsValid(Live2DController)) return;
             var tween = new VectorTween(Live2DController.ModelScale, scale, duration, SetBehaviourScale, false, easingType);
             await scaleTweener.RunAsync(tween, cancellationToken);
         }
@@ -167,7 +168,7 @@ namespace Naninovel
 
         protected override void SetBehaviourPosition (Vector3 position)
         {
-            if (!Transform || !RenderCamera || !Live2DController) return;
+            if (!Transform || !RenderCamera || !ObjectUtils.IsValid(Live2DController)) return;
 
             this.position = position;
 
@@ -179,11 +180,10 @@ namespace Naninovel
 
         protected override void SetBehaviourScale (Vector3 scale)
         {
-            if (!Live2DController) return;
-
             this.scale = scale;
 
-            Live2DController.ModelScale = scale;
+            if (ObjectUtils.IsValid(Live2DController))
+                Live2DController.ModelScale = scale;
         }
 
         protected virtual void SetAppearance (string appearance)
@@ -192,21 +192,23 @@ namespace Naninovel
 
             if (string.IsNullOrEmpty(appearance)) return;
 
-            Live2DController.SetAppearance(appearance);
+            if (ObjectUtils.IsValid(Live2DController))
+                Live2DController.SetAppearance(appearance);
         }
 
-        protected virtual void SetVisibility (bool isVisible)
+        protected virtual void SetVisibility (bool visible)
         {
-            this.visible = isVisible;
+            this.visible = visible;
 
-            SpriteRenderer.Opacity = isVisible ? 1 : 0;
+            SpriteRenderer.Opacity = visible ? 1 : 0;
         }
 
         protected virtual void SetLookDirection (CharacterLookDirection lookDirection)
         {
             this.lookDirection = lookDirection;
 
-            Live2DController.SetLookDirection(lookDirection);
+            if (ObjectUtils.IsValid(Live2DController))
+                Live2DController.SetLookDirection(lookDirection);
         }
 
         protected override Color GetBehaviourTintColor () => SpriteRenderer.TintColor;
@@ -222,7 +224,7 @@ namespace Naninovel
 
         protected virtual void InitializeController (GameObject live2DPrefab)
         {
-            if (Live2DController) return;
+            if (ObjectUtils.IsValid(Live2DController)) return;
 
             var prefab = Engine.Instantiate(live2DPrefab, $"{Id} Live2D Renderer");
             if (ObjectUtils.IsValid(prefab))
@@ -251,10 +253,10 @@ namespace Naninovel
 
         private void DisposeResources ()
         {
-            if (RenderTexture)
-                Object.Destroy(RenderTexture);
-            if (Live2DController)
-                Object.Destroy(Live2DController.gameObject);
+            if (ObjectUtils.IsValid(RenderTexture))
+                ObjectUtils.DestroyOrImmediate(RenderTexture);
+            if (ObjectUtils.IsValid(Live2DController))
+                ObjectUtils.DestroyOrImmediate(Live2DController.gameObject);
             Live2DController = null;
         }
 
@@ -279,7 +281,8 @@ namespace Naninovel
         {
             if (!lipSyncAllowed || args.AuthorId != Id) return;
 
-            Live2DController.SetIsSpeaking(true);
+            if (ObjectUtils.IsValid(Live2DController))
+                Live2DController.SetIsSpeaking(true);
 
             var playedVoicePath = audioManager.GetPlayedVoicePath();
             if (!string.IsNullOrEmpty(playedVoicePath))
@@ -295,13 +298,15 @@ namespace Naninovel
         {
             if (args.AuthorId != Id) return;
 
-            Live2DController.SetIsSpeaking(false);
+            if (ObjectUtils.IsValid(Live2DController))
+                Live2DController.SetIsSpeaking(false);
             textPrinterManager.OnPrintTextFinished -= HandlePrintTextFinished;
         }
 
         private void HandleVoiceClipStopped ()
         {
-            Live2DController.SetIsSpeaking(false);
+            if (ObjectUtils.IsValid(Live2DController))
+                Live2DController.SetIsSpeaking(false);
         }
     }
 }
