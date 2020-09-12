@@ -18,7 +18,7 @@ namespace Naninovel
         public override Vector3 Scale { get => scale; set { CompleteScaleTween(); SetBehaviourScale(value); } }
         public CharacterLookDirection LookDirection { get => lookDirection; set => SetLookDirection(value); }
 
-        protected LocalizableResourceLoader<GameObject> PrefabLoader { get; private set; }
+        protected LocalizableResourceLoader<GameObject> PrefabLoader { get; }
         protected Live2DController Live2DController { get; private set; }
         protected RenderTexture RenderTexture { get; private set; }
         protected Camera RenderCamera { get; private set; }
@@ -30,7 +30,6 @@ namespace Naninovel
         private static Live2DConfiguration config;
 
         private readonly ITextPrinterManager textPrinterManager;
-        private readonly ICharacterManager characterManager;
         private readonly ICameraManager cameraManager;
         private readonly IAudioManager audioManager;
         private readonly CameraConfiguration cameraConfig;
@@ -50,7 +49,6 @@ namespace Naninovel
             if (!config) config = Engine.GetConfiguration<Live2DConfiguration>();
 
             cameraManager = Engine.GetService<ICameraManager>();
-            characterManager = Engine.GetService<ICharacterManager>();
             textPrinterManager = Engine.GetService<ITextPrinterManager>();
             audioManager = Engine.GetService<IAudioManager>();
             positionTweener = new Tweener<VectorTween>();
@@ -62,9 +60,9 @@ namespace Naninovel
             textPrinterManager.OnPrintTextStarted += HandlePrintTextStarted;
             textPrinterManager.OnPrintTextFinished += HandlePrintTextFinished;
 
-            var providerMngr = Engine.GetService<IResourceProviderManager>();
-            var localeMngr = Engine.GetService<ILocalizationManager>();
-            PrefabLoader = metadata.Loader.CreateLocalizableFor<GameObject>(providerMngr, localeMngr);
+            var providerManager = Engine.GetService<IResourceProviderManager>();
+            var localizationManager = Engine.GetService<ILocalizationManager>();
+            PrefabLoader = metadata.Loader.CreateLocalizableFor<GameObject>(providerManager, localizationManager);
 
             SpriteRenderer = GameObject.AddComponent<TransitionalSpriteRenderer>();
             SpriteRenderer.Pivot = metadata.Pivot;
