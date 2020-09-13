@@ -137,6 +137,12 @@ namespace Naninovel
         {
             if (Engine.Behaviour != null)
                 Engine.Behaviour.OnBehaviourUpdate -= RenderLive2D;
+            
+            if (textPrinterManager != null)
+            {
+                textPrinterManager.OnPrintTextStarted -= HandlePrintTextStarted;
+                textPrinterManager.OnPrintTextFinished -= HandlePrintTextFinished;
+            }
 
             if (renderTexture)
                 RenderTexture.ReleaseTemporary(renderTexture);
