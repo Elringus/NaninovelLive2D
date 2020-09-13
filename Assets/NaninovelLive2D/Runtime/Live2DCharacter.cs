@@ -179,6 +179,22 @@ namespace Naninovel
                 Live2DController.SetLookDirection(lookDirection);
         }
 
+        protected virtual void InitializeDrawables ()
+        {
+            Live2DController.CubismModel.ForceUpdateNow(); // Required to build meshes.
+
+            drawables.Clear();
+            drawables.AddRange(Live2DController.RenderController.Renderers
+                .Select(cd => new Live2DDrawable(cd))
+                .OrderBy(d => d.MeshRenderer.sortingOrder)
+                .ThenByDescending(d => d.Transform.position.z));
+            if (drawables.Count == 0) return;
+
+            var maxPosX = drawables.Max(d => Mathf.Max(Mathf.Abs(d.MeshRenderer.bounds.max.x), Mathf.Abs(d.MeshRenderer.bounds.min.x)));
+            var maxPosY = drawables.Max(d => Mathf.Max(Mathf.Abs(d.MeshRenderer.bounds.max.y), Mathf.Abs(d.MeshRenderer.bounds.min.y)));
+            renderCanvasSize = new Vector2(maxPosX * 2, maxPosY * 2);
+        }
+        
         protected virtual void RenderLive2D ()
         {
             if (drawables.Count == 0)
@@ -222,22 +238,6 @@ namespace Naninovel
             Graphics.ExecuteCommandBuffer(commandBuffer);
         }
 
-        protected virtual void InitializeDrawables ()
-        {
-            Live2DController.CubismModel.ForceUpdateNow(); // Required to build meshes.
-
-            drawables.Clear();
-            drawables.AddRange(Live2DController.RenderController.Renderers
-                .Select(cd => new Live2DDrawable(cd))
-                .OrderBy(d => d.MeshRenderer.sortingOrder)
-                .ThenByDescending(d => d.Transform.position.z));
-            if (drawables.Count == 0) return;
-
-            var maxPosX = drawables.Max(d => Mathf.Max(Mathf.Abs(d.MeshRenderer.bounds.max.x), Mathf.Abs(d.MeshRenderer.bounds.min.x)));
-            var maxPosY = drawables.Max(d => Mathf.Max(Mathf.Abs(d.MeshRenderer.bounds.max.y), Mathf.Abs(d.MeshRenderer.bounds.min.y)));
-            renderCanvasSize = new Vector2(maxPosX * 2, maxPosY * 2);
-        }
-        
         private void HandlePrintTextStarted (PrintTextArgs args)
         {
             if (!lipSyncAllowed || args.AuthorId != Id) return;
