@@ -191,8 +191,13 @@ namespace Naninovel
                 .ThenByDescending(d => d.Transform.position.z));
             if (drawables.Count == 0) return;
 
-            var bounds = Live2DController.RenderController.Renderers.GetMeshRendererBounds();
-            renderCanvasSize = new Vector2(bounds.size.x, bounds.size.y);
+            Live2DController.TryGetComponent<Live2DRenderCanvas>(out var renderCanvas);
+            if (renderCanvas) renderCanvasSize = renderCanvas.Size;
+            else
+            {
+                var bounds = Live2DController.RenderController.Renderers.GetMeshRendererBounds();
+                renderCanvasSize = new Vector2(bounds.size.x, bounds.size.y);
+            }
         }
         
         protected virtual void RenderLive2D ()

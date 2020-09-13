@@ -3,16 +3,19 @@
 @back Snow time:0
 @spawn Snow params:,0
 
-hr.Default: Lorem ipsum dolor sit amet, consectetur adipiscing elit.[i] Ut pretium porta sapien. Vivamus sit amet fermentum nisi. 
+@char hr.Default look:right wait:false
+hr: Lorem ipsum dolor sit amet, consectetur adipiscing elit.[i] Ut pretium porta sapien. Vivamus sit amet fermentum nisi. 
 hr.Happy: Nunc sem felis!
-hr.Angry: Cras sed dictum turpis...
+@char hr.Angry look:center wait:false
+hr: Cras sed dictum turpis...
 
 @despawn Snow params:0
 @hidePrinter
 @spawn SunShafts wait:false
 @back Beach.Ripple time:1
 
-sr.Default: Phasellus id elit nec lacus malesuada varius vel ac neque.
+@char sr.Default look:right wait:false
+sr: Phasellus id elit nec lacus malesuada varius vel ac neque.
 sr.Sing: ♫ Phasellus id varius mi. ♫ Duis mollis, lorem quis aliquet tincidunt, nisl sem commodo eros, non commodo diam quam vel nulla. ♫
 sr.Sleep: Nulla fermentum, orci in consequat efficitur, sapien turpis hendrerit purus, sed pellentesque nibh lacus et diam.
 

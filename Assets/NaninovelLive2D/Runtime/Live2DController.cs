@@ -52,13 +52,13 @@ namespace Naninovel
             switch (lookDirection)
             {
                 case CharacterLookDirection.Center:
-                    lookTarget.transform.localPosition = lookController.Center.position;
+                    lookTarget.transform.position = transform.position;
                     break;
                 case CharacterLookDirection.Left:
-                    lookTarget.transform.localPosition = lookController.Center.position - lookController.Center.right;
+                    lookTarget.transform.position = transform.position - new Vector3(10, 0);
                     break;
                 case CharacterLookDirection.Right:
-                    lookTarget.transform.localPosition = lookController.Center.position + lookController.Center.right;
+                    lookTarget.transform.position = transform.position + new Vector3(10, 0);
                     break;
             }
         }
