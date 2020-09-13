@@ -25,11 +25,15 @@ MonoBehaviour:
       PathPrefix: Characters
       ProviderTypes: []
     guid: 8e564fef-7489-4f3c-9002-fbf103cf1cfa
+    customData:
+      id: 0
     Pivot: {x: 0.5, y: 0}
     PixelsPerUnit: 100
     EnableDepthPass: 1
     DepthAlphaCutoff: 0.5
     CustomShader: {fileID: 0}
+    RenderTexture: {fileID: 0}
+    CorrectRenderAspect: 1
     BakedLookDirection: 1
     DisplayName: 
     UseCharacterColor: 0
@@ -48,7 +52,8 @@ MonoBehaviour:
     Poses: []
   Metadata:
     ids:
-    - Hiyori
+    - h
+    - hr
     metas:
     - Implementation: Naninovel.Live2DCharacter, Assembly-CSharp, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
@@ -60,13 +65,17 @@ MonoBehaviour:
         - Naninovel.ProjectResourceProvider, Elringus.Naninovel.Runtime, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
       guid: b8fe3311-f675-4931-a75f-c7f9f0ddc23b
+      customData:
+        id: 0
       Pivot: {x: 0.5, y: 0}
       PixelsPerUnit: 100
       EnableDepthPass: 1
       DepthAlphaCutoff: 0.5
       CustomShader: {fileID: 0}
+      RenderTexture: {fileID: 0}
+      CorrectRenderAspect: 1
       BakedLookDirection: 1
-      DisplayName: 
+      DisplayName: Hiyori
       UseCharacterColor: 1
       NameColor: {r: 0.28773582, g: 0.7510815, b: 1, a: 1}
       MessageColor: {r: 0.8726415, g: 0.9559144, b: 1, a: 1}
@@ -81,6 +90,41 @@ MonoBehaviour:
       ClipMessageSound: 1
       LinkedPrinter: 
       Poses: []
+    - Implementation: Naninovel.Live2DCharacter, Assembly-CSharp, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+      Loader:
+        PathPrefix: Characters
+        ProviderTypes:
+        - Naninovel.AddressableResourceProvider, Elringus.Naninovel.Runtime, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+        - Naninovel.ProjectResourceProvider, Elringus.Naninovel.Runtime, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null
+      guid: e82ca361-7667-4cd0-bd04-5271b2f1ee82
+      customData:
+        id: 0
+      Pivot: {x: 0.5, y: 0}
+      PixelsPerUnit: 100
+      EnableDepthPass: 1
+      DepthAlphaCutoff: 0.5
+      CustomShader: {fileID: 0}
+      RenderTexture: {fileID: 8400000, guid: 5605299017d6b4843b7e950864fc66c0, type: 2}
+      CorrectRenderAspect: 1
+      BakedLookDirection: 1
+      DisplayName: Hiyori
+      UseCharacterColor: 1
+      NameColor: {r: 0.28773582, g: 0.7510815, b: 1, a: 1}
+      MessageColor: {r: 0.8726415, g: 0.9559144, b: 1, a: 1}
+      HighlightWhenSpeaking: 0
+      HighlightCharacterCount: 0
+      SpeakingTint: {r: 1, g: 1, b: 1, a: 1}
+      NotSpeakingTint: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+      PlaceOnTop: 1
+      HighlightDuration: 0.35
+      HighlightEasing: 1
+      MessageSound: 
+      ClipMessageSound: 1
+      LinkedPrinter: HiyoriPrinter
+      Poses: []
   AvatarLoader:
     PathPrefix: CharacterAvatars
     ProviderTypes:
@@ -88,3 +132,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
     - Naninovel.ProjectResourceProvider, Elringus.Naninovel.Runtime, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
+  references:
+    version: 1
+    00000000:
+      type: {class: , ns: , asm: }

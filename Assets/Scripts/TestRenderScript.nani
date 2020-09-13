@@ -1,0 +1,9 @@
+@back Snow time:0
+@spawn Snow params:,0
+
+# Start
+hr.Default: Lorem ipsum dolor sit amet, consectetur adipiscing elit.[i] Ut pretium porta sapien. Vivamus sit amet fermentum nisi. 
+hr.Happy: Nunc sem felis!
+hr.Angry: Cras sed dictum turpis...
+@hidePrinter
+@goto .Start

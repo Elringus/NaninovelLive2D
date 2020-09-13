@@ -149,13 +149,13 @@ MonoBehaviour:
       Guid: bb95f484e341dcd4391a572f22b7d067
   - Id: CharacterAvatars
     Resources:
-    - Name: Hiyori/Default
+    - Name: h/Default
       PathPrefix: CharacterAvatars
       Guid: 3bf136f11c3fa7347a317fe864e78dec
   - Id: Characters/b8fe3311-f675-4931-a75f-c7f9f0ddc23b
     Resources:
-    - Name: Hiyori
-      PathPrefix: Characters/Hiyori
+    - Name: h
+      PathPrefix: Characters/h
       Guid: 5fc4781c049430144a8e9d985ed48e4e
   - Id: Backgrounds/e380fb47-2fc4-4531-ac56-5bdc5a6f1e3a
     Resources:
@@ -167,6 +167,9 @@ MonoBehaviour:
     - Name: TestScript
       PathPrefix: Scripts
       Guid: e8d729144a6c4274f8c88b151fa577ea
+    - Name: TestRenderScript
+      PathPrefix: Scripts
+      Guid: e371d4fe2d11a634ebf80087195fd8b8
   - Id: UI
     Resources:
     - Name: ClickThroughPanel
@@ -259,3 +262,13 @@ MonoBehaviour:
     - Name: SunShafts
       PathPrefix: Spawn
       Guid: c4bf810b9b6cc9f44a58fd670678ded4
+  - Id: Characters/e82ca361-7667-4cd0-bd04-5271b2f1ee82
+    Resources:
+    - Name: hr
+      PathPrefix: Characters/hr
+      Guid: 5fc4781c049430144a8e9d985ed48e4e
+  - Id: TextPrinters/80abf0e8-28d2-4428-803a-d31e96c75fc4
+    Resources:
+    - Name: HiyoriPrinter
+      PathPrefix: TextPrinters
+      Guid: d07cbc81c981ab341bd3bb7c57ea4846
