@@ -54,18 +54,16 @@ namespace Naninovel
                 textureRenderer.Initialize(metadata.CustomShader);
                 textureRenderer.RenderTexture = metadata.RenderTexture;
                 textureRenderer.CorrectAspect = metadata.CorrectRenderAspect;
-                textureRenderer.DepthPassEnabled = metadata.EnableDepthPass;
-                textureRenderer.DepthAlphaCutoff = metadata.DepthAlphaCutoff;
                 TransitionalRenderer = textureRenderer;
             }
             else
             {
                 var spriteRenderer = GameObject.AddComponent<TransitionalSpriteRenderer>();
                 spriteRenderer.Initialize(metadata.Pivot, metadata.PixelsPerUnit, metadata.CustomShader);
-                spriteRenderer.DepthPassEnabled = metadata.EnableDepthPass;
-                spriteRenderer.DepthAlphaCutoff = metadata.DepthAlphaCutoff;
                 TransitionalRenderer = spriteRenderer;
             }
+            TransitionalRenderer.DepthPassEnabled = metadata.EnableDepthPass;
+            TransitionalRenderer.DepthAlphaCutoff = metadata.DepthAlphaCutoff;
             
             SetVisibility(false);
         }
