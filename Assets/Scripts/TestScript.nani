@@ -1,14 +1,28 @@
-@back Snow time:0
-@spawn Snow params:,0
-@printer Wide
+@back Beach
+@spawn SunShafts params:0.25 wait:false
 
 # Start
+
+@printer Bubble.Right pos:30,80 time:0
 @char h.Default pos:50,-25 scale:1 look:center wait:false
-h: Lorem ipsum dolor sit amet, consectetur adipiscing elit.[i] Ut pretium porta sapien. Vivamus sit amet fermentum nisi. 
+h: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut pretium porta sapien. Vivamus sit amet fermentum nisi.
+@hidePrinter wait:false
 @char h.Happy pos:35,-55 scale:1.3 look:right
+@printer Bubble.Left pos:58,80
 h: Nunc sem felis!
+@hidePrinter wait:false
 @arrange h.75
+@printer Bubble.Right pos:52,80
 h.Angry: Cras sed dictum turpis...
-@hideChars
+
+@printer Bubble.Right pos:58,43 time:0
+@char h.Surprise wait:false
+s.Default: Mauris et nulla facilisis, facilisis libero eget, dictum nisl.
+@char h.Happy wait:false
+@printer Bubble.Right pos:58,50 time:0
+s.Sing: Integer venenatis ac lectus eu facilisis. Aliquam bibendum consectetur nisl, vitae gravida nisi venenatis in. Praesent orci arcu, convallis quis mattis vulputate, tempus quis turpis. Vestibulum tincidunt vehicula ipsum, id vehicula felis euismod eu.
+s.Sleep: Etiam lacinia eros interdum accumsan luctus.
+
+@hideChars wait:false
 @hidePrinter
 @goto .Start

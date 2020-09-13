@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Live2D.Cubism.Rendering;
 using Naninovel.Commands;
 using UniRx.Async;
 using UnityEngine;
@@ -190,9 +191,8 @@ namespace Naninovel
                 .ThenByDescending(d => d.Transform.position.z));
             if (drawables.Count == 0) return;
 
-            var maxPosX = drawables.Max(d => Mathf.Max(Mathf.Abs(d.MeshRenderer.bounds.max.x), Mathf.Abs(d.MeshRenderer.bounds.min.x)));
-            var maxPosY = drawables.Max(d => Mathf.Max(Mathf.Abs(d.MeshRenderer.bounds.max.y), Mathf.Abs(d.MeshRenderer.bounds.min.y)));
-            renderCanvasSize = new Vector2(maxPosX * 2, maxPosY * 2);
+            var bounds = Live2DController.RenderController.Renderers.GetMeshRendererBounds();
+            renderCanvasSize = new Vector2(bounds.size.x, bounds.size.y);
         }
         
         protected virtual void RenderLive2D ()
