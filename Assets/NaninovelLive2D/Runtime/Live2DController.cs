@@ -67,9 +67,6 @@ namespace Naninovel
 
         protected virtual void Awake ()
         {
-            modelTransform = transform.Find("Drawables");
-            Debug.Assert(modelTransform, "Failed to find Drawables game object inside Live2D prefab.");
-
             animator = GetComponent<Animator>();
             RenderController = GetComponent<CubismRenderController>();
             lookController = GetComponent<CubismLookController>();
