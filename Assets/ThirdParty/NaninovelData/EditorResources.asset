@@ -100,58 +100,8 @@ MonoBehaviour:
     - Name: SunShafts
       PathPrefix: Spawn
       Guid: c4bf810b9b6cc9f44a58fd670678ded4
-  - Id: UI
-    Resources:
-    - Name: ClickThroughPanel
-      PathPrefix: UI
-      Guid: 702c32b2de0c0784b9a66ec90601874f
-    - Name: IBacklogUI
-      PathPrefix: UI
-      Guid: 7fba909c66b25324cb77db18679c2c96
-    - Name: ICGGalleryUI
-      PathPrefix: UI
-      Guid: 71da50c8dae82bd42ba67528804e820c
-    - Name: IConfirmationUI
-      PathPrefix: UI
-      Guid: 88d03f19bcbff914ba33a7c9895e2d7c
-    - Name: IContinueInputUI
-      PathPrefix: UI
-      Guid: 1add671f8348e8443bcc56290e82fc5e
-    - Name: IExternalScriptsUI
-      PathPrefix: UI
-      Guid: 671ceb4f549ddf046913d7debf113469
-    - Name: ILoadingUI
-      PathPrefix: UI
-      Guid: 53aad00e5cf184e458adb001c550518a
-    - Name: IMovieUI
-      PathPrefix: UI
-      Guid: f9a211517d1cb1a44964dc2254463049
-    - Name: IRollbackUI
-      PathPrefix: UI
-      Guid: a32c73a3aff4b274c85b3ff16c854b07
-    - Name: ISaveLoadUI
-      PathPrefix: UI
-      Guid: 8d53726b3d08433479398f02b4780e7f
-    - Name: ISceneTransitionUI
-      PathPrefix: UI
-      Guid: e3b234b4273b7f64ab3f1d9fe425ed23
-    - Name: ISettingsUI
-      PathPrefix: UI
-      Guid: 65c37f59e9b266f468dd5381fdc03fc3
-    - Name: ITipsUI
-      PathPrefix: UI
-      Guid: f5aae572225ee1b4c96d1a17fc5cb073
-    - Name: ITitleUI
-      PathPrefix: UI
-      Guid: 4b121aa1be1b7e04480b452c595ff17a
-    - Name: IVariableInputUI
-      PathPrefix: UI
-      Guid: bb95f484e341dcd4391a572f22b7d067
   - Id: CharacterAvatars
-    Resources:
-    - Name: h/Default
-      PathPrefix: CharacterAvatars
-      Guid: 3bf136f11c3fa7347a317fe864e78dec
+    Resources: []
   - Id: Characters/b8fe3311-f675-4931-a75f-c7f9f0ddc23b
     Resources:
     - Name: h
@@ -173,56 +123,6 @@ MonoBehaviour:
     - Name: TestRenderScript
       PathPrefix: Scripts
       Guid: e371d4fe2d11a634ebf80087195fd8b8
-  - Id: UI
-    Resources:
-    - Name: ClickThroughPanel
-      PathPrefix: UI
-      Guid: 702c32b2de0c0784b9a66ec90601874f
-    - Name: IBacklogUI
-      PathPrefix: UI
-      Guid: 7fba909c66b25324cb77db18679c2c96
-    - Name: ICGGalleryUI
-      PathPrefix: UI
-      Guid: 71da50c8dae82bd42ba67528804e820c
-    - Name: IConfirmationUI
-      PathPrefix: UI
-      Guid: 88d03f19bcbff914ba33a7c9895e2d7c
-    - Name: IContinueInputUI
-      PathPrefix: UI
-      Guid: 1add671f8348e8443bcc56290e82fc5e
-    - Name: IExternalScriptsUI
-      PathPrefix: UI
-      Guid: 671ceb4f549ddf046913d7debf113469
-    - Name: ILoadingUI
-      PathPrefix: UI
-      Guid: 53aad00e5cf184e458adb001c550518a
-    - Name: IMovieUI
-      PathPrefix: UI
-      Guid: f9a211517d1cb1a44964dc2254463049
-    - Name: IPauseUI
-      PathPrefix: UI
-      Guid: 480f5db62ea305c46b89a86496d2a0c9
-    - Name: IRollbackUI
-      PathPrefix: UI
-      Guid: a32c73a3aff4b274c85b3ff16c854b07
-    - Name: ISaveLoadUI
-      PathPrefix: UI
-      Guid: 8d53726b3d08433479398f02b4780e7f
-    - Name: ISceneTransitionUI
-      PathPrefix: UI
-      Guid: e3b234b4273b7f64ab3f1d9fe425ed23
-    - Name: ISettingsUI
-      PathPrefix: UI
-      Guid: 65c37f59e9b266f468dd5381fdc03fc3
-    - Name: ITipsUI
-      PathPrefix: UI
-      Guid: f5aae572225ee1b4c96d1a17fc5cb073
-    - Name: ITitleUI
-      PathPrefix: UI
-      Guid: 4b121aa1be1b7e04480b452c595ff17a
-    - Name: IVariableInputUI
-      PathPrefix: UI
-      Guid: bb95f484e341dcd4391a572f22b7d067
   - Id: TextPrinters/ab0106ea-dca0-4b89-a519-1c79c054b186
     Resources:
     - Name: Wide
@@ -290,3 +190,50 @@ MonoBehaviour:
     - Name: SenkoPrinter
       PathPrefix: TextPrinters
       Guid: 5ebc1f5d3d27e2f478f2fb654c1e180c
+  - Id: UI
+    Resources:
+    - Name: BacklogUI
+      PathPrefix: UI
+      Guid: 7fba909c66b25324cb77db18679c2c96
+    - Name: CGGalleryUI
+      PathPrefix: UI
+      Guid: 71da50c8dae82bd42ba67528804e820c
+    - Name: ClickThroughPanel
+      PathPrefix: UI
+      Guid: 702c32b2de0c0784b9a66ec90601874f
+    - Name: ConfirmationUI
+      PathPrefix: UI
+      Guid: 88d03f19bcbff914ba33a7c9895e2d7c
+    - Name: ExternalScriptsUI
+      PathPrefix: UI
+      Guid: 671ceb4f549ddf046913d7debf113469
+    - Name: LoadingUI
+      PathPrefix: UI
+      Guid: 53aad00e5cf184e458adb001c550518a
+    - Name: MovieUI
+      PathPrefix: UI
+      Guid: f9a211517d1cb1a44964dc2254463049
+    - Name: PauseUI
+      PathPrefix: UI
+      Guid: 480f5db62ea305c46b89a86496d2a0c9
+    - Name: RollbackUI
+      PathPrefix: UI
+      Guid: a32c73a3aff4b274c85b3ff16c854b07
+    - Name: SaveLoadUI
+      PathPrefix: UI
+      Guid: 8d53726b3d08433479398f02b4780e7f
+    - Name: SceneTransitionUI
+      PathPrefix: UI
+      Guid: e3b234b4273b7f64ab3f1d9fe425ed23
+    - Name: SettingsUI
+      PathPrefix: UI
+      Guid: 65c37f59e9b266f468dd5381fdc03fc3
+    - Name: TipsUI
+      PathPrefix: UI
+      Guid: f5aae572225ee1b4c96d1a17fc5cb073
+    - Name: TitleUI
+      PathPrefix: UI
+      Guid: 4b121aa1be1b7e04480b452c595ff17a
+    - Name: VariableInputUI
+      PathPrefix: UI
+      Guid: bb95f484e341dcd4391a572f22b7d067

@@ -80,11 +80,11 @@ namespace Naninovel
 
             var prefabResource = await prefabLoader.LoadAsync(Id);
             Live2DController = Engine.Instantiate(prefabResource.Object).GetComponent<Live2DController>();
-            Live2DController.gameObject.name = prefabResource.Object.name;
+            Live2DController.gameObject.name = "Live2DModel";
             Live2DController.transform.SetParent(Transform);
 
             InitializeDrawables();
-                
+
             Engine.Behaviour.OnBehaviourUpdate += RenderLive2D;
         }
 
@@ -199,6 +199,9 @@ namespace Naninovel
                 var bounds = Live2DController.RenderController.Renderers.GetMeshRendererBounds();
                 renderCanvasSize = new Vector2(bounds.size.x, bounds.size.y);
             }
+            
+            // Align underlying model game object with the render texture position.
+            Live2DController.transform.localPosition += new Vector3(0, renderCanvasSize.y / 2);
         }
         
         protected virtual void RenderLive2D ()
