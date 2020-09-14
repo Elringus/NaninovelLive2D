@@ -32,7 +32,6 @@ namespace Naninovel
         private CubismLookController lookController;
         private CubismLookTargetBehaviour lookTarget;
         private CubismMouthController mouthController;
-        private Transform modelTransform;
         private bool isSpeaking;
 
         public virtual void SetRenderCamera (Camera camera)
