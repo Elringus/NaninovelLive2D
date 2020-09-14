@@ -155,7 +155,7 @@ MonoBehaviour:
   - Id: Characters/b8fe3311-f675-4931-a75f-c7f9f0ddc23b
     Resources:
     - Name: h
-      PathPrefix: Characters/h
+      PathPrefix: Characters
       Guid: 5fc4781c049430144a8e9d985ed48e4e
   - Id: Backgrounds/e380fb47-2fc4-4531-ac56-5bdc5a6f1e3a
     Resources:
@@ -268,7 +268,7 @@ MonoBehaviour:
   - Id: Characters/e82ca361-7667-4cd0-bd04-5271b2f1ee82
     Resources:
     - Name: hr
-      PathPrefix: Characters/hr
+      PathPrefix: Characters
       Guid: 5fc4781c049430144a8e9d985ed48e4e
   - Id: TextPrinters/80abf0e8-28d2-4428-803a-d31e96c75fc4
     Resources:
@@ -278,12 +278,12 @@ MonoBehaviour:
   - Id: Characters/da524575-4c75-4abc-a8f4-90fff9103850
     Resources:
     - Name: s
-      PathPrefix: Characters/s
+      PathPrefix: Characters
       Guid: 2f1c02513bda4e24abd1053633268b65
   - Id: Characters/3afd1e6b-75d0-43b2-ba76-cb523b5b7651
     Resources:
     - Name: sr
-      PathPrefix: Characters/sr
+      PathPrefix: Characters
       Guid: 2f1c02513bda4e24abd1053633268b65
   - Id: TextPrinters/51651b9e-cc58-4ef0-b712-9cd88b82fa96
     Resources:

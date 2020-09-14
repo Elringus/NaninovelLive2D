@@ -9,11 +9,12 @@ using UnityEngine.Rendering;
 namespace Naninovel
 {
     /// <summary>
-    /// A <see cref="ICharacterActor"/> implementation using a <see cref="Naninovel.Live2DController"/> to represent an actor.
+    /// A <see cref="ICharacterActor"/> implementation using a <see cref="Live2DController"/> to represent an actor.
     /// </summary>
     /// <remarks>
-    /// Live2D character prefab should have a <see cref="Naninovel.Live2DController"/> components attached to the root object.
+    /// Live2D character prefab should have a <see cref="Live2DController"/> components attached to the root object.
     /// </remarks>
+    [ActorResources(typeof(Live2DController), false)]
     public class Live2DCharacter : MonoBehaviourActor, ICharacterActor, LipSync.IReceiver
     {
         public override string Appearance { get => appearance; set => SetAppearance(value); }
@@ -77,7 +78,7 @@ namespace Naninovel
             var localizationManager = Engine.GetService<ILocalizationManager>();
             prefabLoader = metadata.Loader.CreateLocalizableFor<GameObject>(providerManager, localizationManager);
 
-            var prefabResource = (await prefabLoader.LoadAllAsync(Id))?.FirstOrDefault();
+            var prefabResource = await prefabLoader.LoadAsync(Id);
             Live2DController = Engine.Instantiate(prefabResource.Object).GetComponent<Live2DController>();
             Live2DController.gameObject.name = prefabResource.Object.name;
             Live2DController.transform.SetParent(Transform);
@@ -116,7 +117,7 @@ namespace Naninovel
         {
             if (heldAppearances.Count == 0)
             {
-                var prefabResource = (await prefabLoader.LoadAllAsync(Id))?.FirstOrDefault();
+                var prefabResource = await prefabLoader.LoadAsync(Id);
                 if (prefabResource.Valid)
                     prefabResource.Hold(holder);
             }
