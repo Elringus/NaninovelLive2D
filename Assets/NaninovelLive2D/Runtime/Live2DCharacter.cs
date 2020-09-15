@@ -192,7 +192,7 @@ namespace Naninovel
                 .ThenByDescending(d => d.Transform.position.z));
             if (drawables.Count == 0) return;
 
-            Live2DController.TryGetComponent<Live2DRenderCanvas>(out var renderCanvas);
+            Live2DController.TryGetComponent<RenderCanvas>(out var renderCanvas);
             if (renderCanvas) renderCanvasSize = renderCanvas.Size;
             else
             {
