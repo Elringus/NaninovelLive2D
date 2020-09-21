@@ -25,7 +25,7 @@ namespace Naninovel
         protected Live2DController Live2DController { get; private set; }
 
         private readonly CharacterMetadata metadata;
-        private readonly HashSet<string> heldAppearances = new HashSet<string>();
+        private readonly Dictionary<object, HashSet<string>> heldAppearances = new Dictionary<object, HashSet<string>>();
         private readonly List<Live2DDrawable> drawables = new List<Live2DDrawable>();
         private readonly CommandBuffer commandBuffer = new CommandBuffer();
         private readonly MaterialPropertyBlock propertyBlock = new MaterialPropertyBlock();
@@ -113,24 +113,27 @@ namespace Naninovel
             lipSyncAllowed = active;
         }
 
-        public override async UniTask HoldResourcesAsync (object holder, string appearance)
+        public override async UniTask HoldResourcesAsync (string appearance, object holder)
         {
-            if (heldAppearances.Count == 0)
+            if (!heldAppearances.ContainsKey(holder))
             {
-                var prefabResource = await prefabLoader.LoadAsync(Id);
-                if (prefabResource.Valid)
-                    prefabResource.Hold(holder);
+                await prefabLoader.LoadAndHoldAsync(Id, holder);
+                heldAppearances.Add(holder, new HashSet<string>());
             }
 
-            heldAppearances.Add(appearance);
+            heldAppearances[holder].Add(appearance);
         }
 
-        public override void ReleaseResources (object holder, string appearance)
+        public override void ReleaseResources (string appearance, object holder)
         {
-            heldAppearances.Remove(appearance);
-
+            if (!heldAppearances.ContainsKey(holder)) return;
+            
+            heldAppearances[holder].Remove(appearance);
             if (heldAppearances.Count == 0)
-                prefabLoader.GetLoadedOrNull(Id)?.Release(holder);
+            {
+                heldAppearances.Remove(holder);
+                prefabLoader?.Release(Id, holder);
+            }
         }
 
         public override void Dispose ()

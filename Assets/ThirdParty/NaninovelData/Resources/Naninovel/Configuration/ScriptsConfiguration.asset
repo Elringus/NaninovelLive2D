@@ -31,12 +31,17 @@ MonoBehaviour:
   InsertLineModifier: 2
   SaveScriptKey: 115
   SaveScriptModifier: 2
-  VisualEditorPageLength: 1000
-  CustomStyleSheet: {fileID: 0}
+  RewindMouseButton: 0
+  RewindModifier: 1
+  EditorPageLength: 1000
+  EditorCustomStyleSheet: {fileID: 0}
+  GraphOrientation: 1
+  GraphAutoAlignPadding: {x: 10, y: 0}
+  GraphCustomStyleSheet: {fileID: 0}
   EnableCommunityModding: 0
   ExternalLoader:
     PathPrefix: Scripts
     ProviderTypes: []
   EnableNavigator: 1
-  ShowNavigatorOnInit: 0
+  ShowNavigatorOnInit: 1
   NavigatorSortOrder: 900
