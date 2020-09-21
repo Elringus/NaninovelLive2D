@@ -123,6 +123,9 @@ MonoBehaviour:
     - Name: TestRenderScript
       PathPrefix: Scripts
       Guid: e371d4fe2d11a634ebf80087195fd8b8
+    - Name: TestDefaultAppearance
+      PathPrefix: Scripts
+      Guid: cbb63ec0f5bc1024282eb23a5096238e
   - Id: TextPrinters/ab0106ea-dca0-4b89-a519-1c79c054b186
     Resources:
     - Name: Wide
