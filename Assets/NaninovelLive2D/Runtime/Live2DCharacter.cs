@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Live2D.Cubism.Rendering;
 using Naninovel.Commands;
@@ -74,6 +75,7 @@ namespace Naninovel
             prefabLoader = ActorMetadata.Loader.CreateLocalizableFor<GameObject>(providerManager, localizationManager);
 
             var prefabResource = await prefabLoader.LoadAsync(Id);
+            if (!prefabResource.Valid) throw new Exception($"Failed to load Live2D model prefab for `{Id}` character. Make sure the resource is set up correctly in the character configuration.");
             Live2DController = Engine.Instantiate(prefabResource.Object).GetComponent<Live2DController>();
             Live2DController.gameObject.name = "Live2DModel";
             Live2DController.transform.SetParent(Transform);
