@@ -15,16 +15,15 @@ namespace Naninovel
     /// Live2D character prefab should have a <see cref="Live2DController"/> components attached to the root object.
     /// </remarks>
     [ActorResources(typeof(Live2DController), false)]
-    public class Live2DCharacter : MonoBehaviourActor, ICharacterActor, LipSync.IReceiver
+    public class Live2DCharacter : MonoBehaviourActor<CharacterMetadata>, ICharacterActor, LipSync.IReceiver
     {
         public override string Appearance { get => appearance; set => SetAppearance(value); }
         public override bool Visible { get => visible; set => SetVisibility(value); }
         public CharacterLookDirection LookDirection { get => lookDirection; set => SetLookDirection(value); }
 
-        protected readonly TransitionalRenderer TransitionalRenderer;
+        protected TransitionalRenderer TransitionalRenderer { get; private set; }
         protected Live2DController Live2DController { get; private set; }
 
-        private readonly CharacterMetadata metadata;
         private readonly Dictionary<object, HashSet<string>> heldAppearances = new Dictionary<object, HashSet<string>>();
         private readonly List<Live2DDrawable> drawables = new List<Live2DDrawable>();
         private readonly CommandBuffer commandBuffer = new CommandBuffer();
@@ -42,41 +41,37 @@ namespace Naninovel
         public Live2DCharacter (string id, CharacterMetadata metadata)
             : base(id, metadata)
         {
-            this.metadata = metadata;
-
             commandBuffer.name = $"Naninovel-RenderLive2D-{id}";
             audioManager = Engine.GetService<IAudioManager>();
             textPrinterManager = Engine.GetService<ITextPrinterManager>();
             textPrinterManager.OnPrintTextStarted += HandlePrintTextStarted;
             textPrinterManager.OnPrintTextFinished += HandlePrintTextFinished;
-            
-            if (metadata.RenderTexture)
-            {
-                var textureRenderer = GameObject.AddComponent<TransitionalTextureRenderer>();
-                textureRenderer.Initialize(metadata.CustomShader);
-                textureRenderer.RenderTexture = metadata.RenderTexture;
-                textureRenderer.CorrectAspect = metadata.CorrectRenderAspect;
-                TransitionalRenderer = textureRenderer;
-            }
-            else
-            {
-                var spriteRenderer = GameObject.AddComponent<TransitionalSpriteRenderer>();
-                spriteRenderer.Initialize(metadata.Pivot, metadata.PixelsPerUnit, metadata.CustomShader);
-                TransitionalRenderer = spriteRenderer;
-            }
-            TransitionalRenderer.DepthPassEnabled = metadata.EnableDepthPass;
-            TransitionalRenderer.DepthAlphaCutoff = metadata.DepthAlphaCutoff;
-            
-            SetVisibility(false);
         }
 
         public override async UniTask InitializeAsync ()
         {
             await base.InitializeAsync();
 
+            if (ActorMetadata.RenderTexture)
+            {
+                var textureRenderer = GameObject.AddComponent<TransitionalTextureRenderer>();
+                textureRenderer.Initialize(ActorMetadata.CustomShader);
+                textureRenderer.RenderTexture = ActorMetadata.RenderTexture;
+                textureRenderer.CorrectAspect = ActorMetadata.CorrectRenderAspect;
+                TransitionalRenderer = textureRenderer;
+            }
+            else
+            {
+                var spriteRenderer = GameObject.AddComponent<TransitionalSpriteRenderer>();
+                spriteRenderer.Initialize(ActorMetadata.Pivot, ActorMetadata.PixelsPerUnit, ActorMetadata.CustomShader);
+                TransitionalRenderer = spriteRenderer;
+            }
+            TransitionalRenderer.DepthPassEnabled = ActorMetadata.EnableDepthPass;
+            TransitionalRenderer.DepthAlphaCutoff = ActorMetadata.DepthAlphaCutoff;
+
             var providerManager = Engine.GetService<IResourceProviderManager>();
             var localizationManager = Engine.GetService<ILocalizationManager>();
-            prefabLoader = metadata.Loader.CreateLocalizableFor<GameObject>(providerManager, localizationManager);
+            prefabLoader = ActorMetadata.Loader.CreateLocalizableFor<GameObject>(providerManager, localizationManager);
 
             var prefabResource = await prefabLoader.LoadAsync(Id);
             Live2DController = Engine.Instantiate(prefabResource.Object).GetComponent<Live2DController>();
@@ -84,6 +79,7 @@ namespace Naninovel
             Live2DController.transform.SetParent(Transform);
 
             InitializeDrawables();
+            SetVisibility(false);
 
             Engine.Behaviour.OnBehaviourUpdate += RenderLive2D;
         }
@@ -215,7 +211,7 @@ namespace Naninovel
                 return;
             }
 
-            var renderDimensions = renderCanvasSize * metadata.PixelsPerUnit;
+            var renderDimensions = renderCanvasSize * ActorMetadata.PixelsPerUnit;
             var renderTextureSize = new Vector2Int(Mathf.RoundToInt(renderDimensions.x), Mathf.RoundToInt(renderDimensions.y));
 
             if (!renderTexture || renderTexture.width != renderTextureSize.x || renderTexture.height != renderTextureSize.y)
@@ -226,8 +222,8 @@ namespace Naninovel
                 TransitionalRenderer.MainTexture = renderTexture;
             }
             
-            var orthoMin = Vector3.Scale(-renderDimensions / 2f, Transform.localScale) + Live2DController.transform.position * metadata.PixelsPerUnit;
-            var orthoMax = Vector3.Scale(renderDimensions / 2f, Transform.localScale) + Live2DController.transform.position * metadata.PixelsPerUnit;
+            var orthoMin = Vector3.Scale(-renderDimensions / 2f, Transform.localScale) + Live2DController.transform.position * ActorMetadata.PixelsPerUnit;
+            var orthoMax = Vector3.Scale(renderDimensions / 2f, Transform.localScale) + Live2DController.transform.position * ActorMetadata.PixelsPerUnit;
             var orthoMatrix = Matrix4x4.Ortho(orthoMin.x, orthoMax.x, orthoMin.y, orthoMax.y, float.MinValue, float.MaxValue);
             var rotationMatrix = Matrix4x4.Rotate(Quaternion.Inverse(Transform.localRotation));
             
@@ -242,7 +238,7 @@ namespace Naninovel
                 if (!drawable.MeshRenderer.enabled) continue;
                 var renderPosition = Live2DController.transform.TransformPoint(rotationMatrix // Compensate actor (parent game object) rotation.
                     .MultiplyPoint3x4(Live2DController.transform.InverseTransformPoint(drawable.Position)));
-                var renderTransform = Matrix4x4.TRS(renderPosition * metadata.PixelsPerUnit, drawable.Rotation, drawable.Scale * metadata.PixelsPerUnit);
+                var renderTransform = Matrix4x4.TRS(renderPosition * ActorMetadata.PixelsPerUnit, drawable.Rotation, drawable.Scale * ActorMetadata.PixelsPerUnit);
                 drawable.MeshRenderer.GetPropertyBlock(propertyBlock);
                 commandBuffer.DrawMesh(drawable.Mesh, renderTransform, drawable.RenderMaterial, 0, -1, propertyBlock);
             }
