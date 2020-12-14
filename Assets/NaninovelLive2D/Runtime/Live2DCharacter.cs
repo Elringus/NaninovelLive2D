@@ -87,7 +87,7 @@ namespace Naninovel
         }
 
         public override UniTask ChangeAppearanceAsync (string appearance, float duration, EasingType easingType = default,
-            Transition transition = default, CancellationToken cancellationToken = default)
+            Transition? transition = default, CancellationToken cancellationToken = default)
         {
             SetAppearance(appearance);
             return UniTask.CompletedTask;
