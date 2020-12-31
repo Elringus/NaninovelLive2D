@@ -234,6 +234,8 @@ namespace Naninovel
             commandBuffer.ClearRenderTarget(true, true, Color.clear);
             commandBuffer.SetProjectionMatrix(orthoMatrix);
 
+            SortDrawables();
+            
             for (int i = 0; i < drawables.Count; i++)
             {
                 var drawable = drawables[i];
@@ -246,6 +248,14 @@ namespace Naninovel
             }
             
             Graphics.ExecuteCommandBuffer(commandBuffer);
+        }
+
+        private void SortDrawables ()
+        {
+            var sortMode = Live2DController.RenderController.SortingMode;
+            if (sortMode == CubismSortingMode.BackToFrontOrder || sortMode == CubismSortingMode.BackToFrontZ)
+                drawables.Sort((x, y) => y.Transform.position.z.CompareTo(x.Transform.position.z));
+            else drawables.Sort((x, y) => x.Transform.position.z.CompareTo(y.Transform.position.z));
         }
 
         private void HandlePrintTextStarted (PrintTextArgs args)
