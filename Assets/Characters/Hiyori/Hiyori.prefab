@@ -7190,6 +7190,7 @@ GameObject:
   - component: {fileID: 6319445848136473810}
   - component: {fileID: 1493151765580180486}
   - component: {fileID: 7730752440607829562}
+  - component: {fileID: 3780082913205571432}
   m_Layer: 0
   m_Name: Hiyori
   m_TagString: Untagged
@@ -7713,6 +7714,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlendMode: 0
   MouthOpening: 1
+--- !u!114 &3780082913205571432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5536130084953423246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71af8337e9ddf15419f2b82dcf666e04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Size: {x: 4.89, y: 13}
+  Offset: {x: 0, y: -0.16}
 --- !u!1 &5622745368175925882
 GameObject:
   m_ObjectHideFlags: 0
