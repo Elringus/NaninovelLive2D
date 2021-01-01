@@ -69,6 +69,25 @@ namespace Naninovel
             Engine.Behaviour.OnBehaviourUpdate += RenderLive2D;
         }
 
+        public override void Dispose ()
+        {
+            if (Engine.Behaviour != null)
+                Engine.Behaviour.OnBehaviourUpdate -= RenderLive2D;
+            
+            if (textPrinterManager != null)
+            {
+                textPrinterManager.OnPrintTextStarted -= HandlePrintTextStarted;
+                textPrinterManager.OnPrintTextFinished -= HandlePrintTextFinished;
+            }
+
+            if (renderTexture)
+                RenderTexture.ReleaseTemporary(renderTexture);
+
+            base.Dispose();
+
+            prefabLoader?.UnloadAll();
+        }
+
         public override UniTask ChangeAppearanceAsync (string appearance, float duration, EasingType easingType = default,
             Transition? transition = default, CancellationToken cancellationToken = default)
         {
@@ -117,25 +136,6 @@ namespace Naninovel
                 heldAppearances.Remove(holder);
                 prefabLoader?.Release(Id, holder);
             }
-        }
-
-        public override void Dispose ()
-        {
-            if (Engine.Behaviour != null)
-                Engine.Behaviour.OnBehaviourUpdate -= RenderLive2D;
-            
-            if (textPrinterManager != null)
-            {
-                textPrinterManager.OnPrintTextStarted -= HandlePrintTextStarted;
-                textPrinterManager.OnPrintTextFinished -= HandlePrintTextFinished;
-            }
-
-            if (renderTexture)
-                RenderTexture.ReleaseTemporary(renderTexture);
-
-            base.Dispose();
-
-            prefabLoader?.UnloadAll();
         }
 
         protected virtual void SetAppearance (string appearance)
