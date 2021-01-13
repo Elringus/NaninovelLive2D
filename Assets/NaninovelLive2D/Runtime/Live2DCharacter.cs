@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Naninovel.Commands;
+using Naninovel.FX;
 using UniRx.Async;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace Naninovel
     /// Live2D character prefab should have a <see cref="Controller"/> components attached to the root object.
     /// </remarks>
     [ActorResources(typeof(Live2DController), false)]
-    public class Live2DCharacter : MonoBehaviourActor<CharacterMetadata>, ICharacterActor, LipSync.IReceiver
+    public class Live2DCharacter : MonoBehaviourActor<CharacterMetadata>, ICharacterActor, LipSync.IReceiver, Blur.IBlurable
     {
         public override string Appearance { get => appearance; set => SetAppearance(value); }
         public override bool Visible { get => visible; set => SetVisibility(value); }
@@ -48,7 +49,7 @@ namespace Naninovel
             
             prefabLoader = InitializeLoader(ActorMetadata);
             Controller = await InitializeControllerAsync(prefabLoader, Id, Transform);
-            Renderer = InitializeRenderer(ActorMetadata, GameObject);
+            Renderer = TransitionalRenderer.CreateFor(ActorMetadata, GameObject);
             Drawer = new Live2DDrawer(Controller);
 
             SetVisibility(false);
@@ -72,6 +73,11 @@ namespace Naninovel
             base.Dispose();
 
             prefabLoader?.UnloadAll();
+        }
+        
+        public UniTask BlurAsync (float duration, float intensity, EasingType easingType = default, CancellationToken cancellationToken = default)
+        {
+            return Renderer.BlurAsync(duration, intensity, easingType, cancellationToken);
         }
 
         public override UniTask ChangeAppearanceAsync (string appearance, float duration, EasingType easingType = default,
@@ -155,31 +161,6 @@ namespace Naninovel
         }
 
         protected virtual void DrawLive2D () => Drawer.DrawTo(Renderer, ActorMetadata.PixelsPerUnit);
-
-        private static TransitionalRenderer InitializeRenderer (OrthoActorMetadata actorMetadata, GameObject gameObject)
-        {
-            TransitionalRenderer renderer;
-            
-            if (actorMetadata.RenderTexture)
-            {
-                var textureRenderer = gameObject.AddComponent<TransitionalTextureRenderer>();
-                textureRenderer.Initialize(actorMetadata.CustomShader);
-                textureRenderer.RenderTexture = actorMetadata.RenderTexture;
-                textureRenderer.CorrectAspect = actorMetadata.CorrectRenderAspect;
-                renderer = textureRenderer;
-            }
-            else
-            {
-                var spriteRenderer = gameObject.AddComponent<TransitionalSpriteRenderer>();
-                spriteRenderer.Initialize(actorMetadata.Pivot, actorMetadata.PixelsPerUnit, actorMetadata.CustomShader);
-                renderer = spriteRenderer;
-            }
-
-            renderer.DepthPassEnabled = actorMetadata.EnableDepthPass;
-            renderer.DepthAlphaCutoff = actorMetadata.DepthAlphaCutoff;
-
-            return renderer;
-        }
 
         private static LocalizableResourceLoader<GameObject> InitializeLoader (ActorMetadata actorMetadata)
         {

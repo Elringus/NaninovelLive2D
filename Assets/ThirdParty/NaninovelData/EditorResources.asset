@@ -15,228 +15,231 @@ MonoBehaviour:
   resourceCategories:
   - Id: TextPrinters/5512c381-9f09-4383-8e3f-44a92a6ee4be
     Resources:
-    - Name: Dialogue
-      PathPrefix: TextPrinters
-      Guid: 1bc08ccd31adff6439e97161aa6e1d8b
+    - name: Dialogue
+      pathPrefix: TextPrinters
+      guid: 1bc08ccd31adff6439e97161aa6e1d8b
   - Id: TextPrinters/710a2fca-a1a5-430b-b13f-3f76a7c89b25
     Resources:
-    - Name: Fullscreen
-      PathPrefix: TextPrinters
-      Guid: c87cebd3f0d4f174789cd351ce9591c4
+    - name: Fullscreen
+      pathPrefix: TextPrinters
+      guid: c87cebd3f0d4f174789cd351ce9591c4
   - Id: TextPrinters/b438c605-6790-4895-947f-5ae89e26af37
     Resources:
-    - Name: Wide
-      PathPrefix: TextPrinters
-      Guid: 781828b806deb1e4cbf50ef9de41da10
+    - name: Wide
+      pathPrefix: TextPrinters
+      guid: 781828b806deb1e4cbf50ef9de41da10
   - Id: TextPrinters/a0746667-cac0-4cce-b701-a1f3d6dafe7d
     Resources:
-    - Name: Chat
-      PathPrefix: TextPrinters
-      Guid: 0126b92e4ff0f564aaa7a38eae3ef6e7
+    - name: Chat
+      pathPrefix: TextPrinters
+      guid: 0126b92e4ff0f564aaa7a38eae3ef6e7
   - Id: TextPrinters/dc980d63-0b2a-4194-9333-ae879116680a
     Resources:
-    - Name: Bubble
-      PathPrefix: TextPrinters
-      Guid: b47d9659b2be5ee4e95a776f213c9d4b
+    - name: Bubble
+      pathPrefix: TextPrinters
+      guid: b47d9659b2be5ee4e95a776f213c9d4b
   - Id: TextPrinters/f89ef9af-1244-4d34-8ad7-bfda41aba9bb
     Resources:
-    - Name: TMProDialogue
-      PathPrefix: TextPrinters
-      Guid: 5838611042eaced44954639c4ea4d81e
+    - name: TMProDialogue
+      pathPrefix: TextPrinters
+      guid: 5838611042eaced44954639c4ea4d81e
   - Id: TextPrinters/320ee47b-a8dd-409b-a0b7-64650e71a36e
     Resources:
-    - Name: TMProFullscreen
-      PathPrefix: TextPrinters
-      Guid: a2aaa417785eeca409e78c404f333ee5
+    - name: TMProFullscreen
+      pathPrefix: TextPrinters
+      guid: a2aaa417785eeca409e78c404f333ee5
   - Id: TextPrinters/3b91f566-e2f1-4b66-90ed-60d38048d515
     Resources:
-    - Name: TMProWide
-      PathPrefix: TextPrinters
-      Guid: 7860ef40eae6a3341be02586f7edd980
+    - name: TMProWide
+      pathPrefix: TextPrinters
+      guid: 7860ef40eae6a3341be02586f7edd980
   - Id: TextPrinters/3716cc7a-48ce-4a19-8c5c-259423c73d12
     Resources:
-    - Name: TMProBubble
-      PathPrefix: TextPrinters
-      Guid: 18cfa78b5fc89b745ba69d51a6a8629a
+    - name: TMProBubble
+      pathPrefix: TextPrinters
+      guid: 18cfa78b5fc89b745ba69d51a6a8629a
   - Id: ChoiceHandlers/eb5daebd-d185-4103-88f0-5f4016e9a272
     Resources:
-    - Name: ButtonList
-      PathPrefix: ChoiceHandlers
-      Guid: 1f6aa29000e839c409e6a9c0704adc96
+    - name: ButtonList
+      pathPrefix: ChoiceHandlers
+      guid: 1f6aa29000e839c409e6a9c0704adc96
   - Id: ChoiceHandlers/03d3c51d-8da8-436c-813e-4aad74f59a31
     Resources:
-    - Name: ButtonArea
-      PathPrefix: ChoiceHandlers
-      Guid: 4fa6d62f894ae6e4698bfa8af59e7942
+    - name: ButtonArea
+      pathPrefix: ChoiceHandlers
+      guid: 4fa6d62f894ae6e4698bfa8af59e7942
   - Id: Spawn
     Resources:
-    - Name: Animate
-      PathPrefix: Spawn
-      Guid: 7bf06fa813bb9c34daf521998fa72ab1
-    - Name: DepthOfField
-      PathPrefix: Spawn
-      Guid: ea76638b26a915946b62907dd1e776fd
-    - Name: DigitalGlitch
-      PathPrefix: Spawn
-      Guid: be75a73ecccb90b4caa5c14edb9ac467
-    - Name: Rain
-      PathPrefix: Spawn
-      Guid: a9117e2fa90704d45b3e1461596c11ee
-    - Name: ShakeBackground
-      PathPrefix: Spawn
-      Guid: 9f56c556ba32fd54fae62347c25a8145
-    - Name: ShakeCamera
-      PathPrefix: Spawn
-      Guid: 1c5b86cf3cfbb1f44ae5641699077da4
-    - Name: ShakeCharacter
-      PathPrefix: Spawn
-      Guid: 1224d69e1592d624cbde93d0f7383d91
-    - Name: ShakePrinter
-      PathPrefix: Spawn
-      Guid: 2795040988e866646801c80024c50be1
-    - Name: Snow
-      PathPrefix: Spawn
-      Guid: 9f4e71cb27fffa04486737d2cf8d622d
-    - Name: SunShafts
-      PathPrefix: Spawn
-      Guid: c4bf810b9b6cc9f44a58fd670678ded4
+    - name: Animate
+      pathPrefix: Spawn
+      guid: 7bf06fa813bb9c34daf521998fa72ab1
+    - name: DepthOfField
+      pathPrefix: Spawn
+      guid: ea76638b26a915946b62907dd1e776fd
+    - name: DigitalGlitch
+      pathPrefix: Spawn
+      guid: be75a73ecccb90b4caa5c14edb9ac467
+    - name: Rain
+      pathPrefix: Spawn
+      guid: a9117e2fa90704d45b3e1461596c11ee
+    - name: ShakeBackground
+      pathPrefix: Spawn
+      guid: 9f56c556ba32fd54fae62347c25a8145
+    - name: ShakeCamera
+      pathPrefix: Spawn
+      guid: 1c5b86cf3cfbb1f44ae5641699077da4
+    - name: ShakeCharacter
+      pathPrefix: Spawn
+      guid: 1224d69e1592d624cbde93d0f7383d91
+    - name: ShakePrinter
+      pathPrefix: Spawn
+      guid: 2795040988e866646801c80024c50be1
+    - name: Snow
+      pathPrefix: Spawn
+      guid: 9f4e71cb27fffa04486737d2cf8d622d
+    - name: SunShafts
+      pathPrefix: Spawn
+      guid: c4bf810b9b6cc9f44a58fd670678ded4
+    - name: Blur
+      pathPrefix: Spawn
+      guid: e466d9326b30a4b49a3dad428b4d9968
   - Id: CharacterAvatars
     Resources: []
   - Id: Characters/b8fe3311-f675-4931-a75f-c7f9f0ddc23b
     Resources:
-    - Name: h
-      PathPrefix: Characters
-      Guid: 5fc4781c049430144a8e9d985ed48e4e
+    - name: h
+      pathPrefix: Characters
+      guid: 5fc4781c049430144a8e9d985ed48e4e
   - Id: Backgrounds/e380fb47-2fc4-4531-ac56-5bdc5a6f1e3a
     Resources:
-    - Name: Snow
-      PathPrefix: Backgrounds/MainBackground
-      Guid: dbba563865d62fd4795052a9bc21b31d
-    - Name: Beach
-      PathPrefix: Backgrounds/MainBackground
-      Guid: 55b32ef47412dd34c9884e2392e6b985
+    - name: Snow
+      pathPrefix: Backgrounds/MainBackground
+      guid: dbba563865d62fd4795052a9bc21b31d
+    - name: Beach
+      pathPrefix: Backgrounds/MainBackground
+      guid: 55b32ef47412dd34c9884e2392e6b985
   - Id: Scripts
     Resources:
-    - Name: TestScript
-      PathPrefix: Scripts
-      Guid: e8d729144a6c4274f8c88b151fa577ea
-    - Name: TestRenderScript
-      PathPrefix: Scripts
-      Guid: e371d4fe2d11a634ebf80087195fd8b8
-    - Name: TestDefaultAppearance
-      PathPrefix: Scripts
-      Guid: cbb63ec0f5bc1024282eb23a5096238e
+    - name: TestScript
+      pathPrefix: Scripts
+      guid: e8d729144a6c4274f8c88b151fa577ea
+    - name: TestRenderScript
+      pathPrefix: Scripts
+      guid: e371d4fe2d11a634ebf80087195fd8b8
+    - name: TestDefaultAppearance
+      pathPrefix: Scripts
+      guid: cbb63ec0f5bc1024282eb23a5096238e
   - Id: TextPrinters/ab0106ea-dca0-4b89-a519-1c79c054b186
     Resources:
-    - Name: Wide
-      PathPrefix: TextPrinters
-      Guid: 781828b806deb1e4cbf50ef9de41da10
+    - name: Wide
+      pathPrefix: TextPrinters
+      guid: 781828b806deb1e4cbf50ef9de41da10
   - Id: TextPrinters/e1f2e528-459f-433f-ab74-4fe2b1c01a5a
     Resources:
-    - Name: Dialogue
-      PathPrefix: TextPrinters
-      Guid: 1bc08ccd31adff6439e97161aa6e1d8b
+    - name: Dialogue
+      pathPrefix: TextPrinters
+      guid: 1bc08ccd31adff6439e97161aa6e1d8b
   - Id: Spawn
     Resources:
-    - Name: Animate
-      PathPrefix: Spawn
-      Guid: 7bf06fa813bb9c34daf521998fa72ab1
-    - Name: DepthOfField
-      PathPrefix: Spawn
-      Guid: ea76638b26a915946b62907dd1e776fd
-    - Name: DigitalGlitch
-      PathPrefix: Spawn
-      Guid: be75a73ecccb90b4caa5c14edb9ac467
-    - Name: Rain
-      PathPrefix: Spawn
-      Guid: a9117e2fa90704d45b3e1461596c11ee
-    - Name: ShakeBackground
-      PathPrefix: Spawn
-      Guid: 9f56c556ba32fd54fae62347c25a8145
-    - Name: ShakeCamera
-      PathPrefix: Spawn
-      Guid: 1c5b86cf3cfbb1f44ae5641699077da4
-    - Name: ShakeCharacter
-      PathPrefix: Spawn
-      Guid: 1224d69e1592d624cbde93d0f7383d91
-    - Name: ShakePrinter
-      PathPrefix: Spawn
-      Guid: 2795040988e866646801c80024c50be1
-    - Name: Snow
-      PathPrefix: Spawn
-      Guid: 9f4e71cb27fffa04486737d2cf8d622d
-    - Name: SunShafts
-      PathPrefix: Spawn
-      Guid: c4bf810b9b6cc9f44a58fd670678ded4
+    - name: Animate
+      pathPrefix: Spawn
+      guid: 7bf06fa813bb9c34daf521998fa72ab1
+    - name: DepthOfField
+      pathPrefix: Spawn
+      guid: ea76638b26a915946b62907dd1e776fd
+    - name: DigitalGlitch
+      pathPrefix: Spawn
+      guid: be75a73ecccb90b4caa5c14edb9ac467
+    - name: Rain
+      pathPrefix: Spawn
+      guid: a9117e2fa90704d45b3e1461596c11ee
+    - name: ShakeBackground
+      pathPrefix: Spawn
+      guid: 9f56c556ba32fd54fae62347c25a8145
+    - name: ShakeCamera
+      pathPrefix: Spawn
+      guid: 1c5b86cf3cfbb1f44ae5641699077da4
+    - name: ShakeCharacter
+      pathPrefix: Spawn
+      guid: 1224d69e1592d624cbde93d0f7383d91
+    - name: ShakePrinter
+      pathPrefix: Spawn
+      guid: 2795040988e866646801c80024c50be1
+    - name: Snow
+      pathPrefix: Spawn
+      guid: 9f4e71cb27fffa04486737d2cf8d622d
+    - name: SunShafts
+      pathPrefix: Spawn
+      guid: c4bf810b9b6cc9f44a58fd670678ded4
   - Id: Characters/e82ca361-7667-4cd0-bd04-5271b2f1ee82
     Resources:
-    - Name: hr
-      PathPrefix: Characters
-      Guid: 5fc4781c049430144a8e9d985ed48e4e
+    - name: hr
+      pathPrefix: Characters
+      guid: 5fc4781c049430144a8e9d985ed48e4e
   - Id: TextPrinters/80abf0e8-28d2-4428-803a-d31e96c75fc4
     Resources:
-    - Name: HiyoriPrinter
-      PathPrefix: TextPrinters
-      Guid: d07cbc81c981ab341bd3bb7c57ea4846
+    - name: HiyoriPrinter
+      pathPrefix: TextPrinters
+      guid: d07cbc81c981ab341bd3bb7c57ea4846
   - Id: Characters/da524575-4c75-4abc-a8f4-90fff9103850
     Resources:
-    - Name: s
-      PathPrefix: Characters
-      Guid: 2f1c02513bda4e24abd1053633268b65
+    - name: s
+      pathPrefix: Characters
+      guid: 2f1c02513bda4e24abd1053633268b65
   - Id: Characters/3afd1e6b-75d0-43b2-ba76-cb523b5b7651
     Resources:
-    - Name: sr
-      PathPrefix: Characters
-      Guid: 2f1c02513bda4e24abd1053633268b65
+    - name: sr
+      pathPrefix: Characters
+      guid: 2f1c02513bda4e24abd1053633268b65
   - Id: TextPrinters/51651b9e-cc58-4ef0-b712-9cd88b82fa96
     Resources:
-    - Name: SenkoPrinter
-      PathPrefix: TextPrinters
-      Guid: 5ebc1f5d3d27e2f478f2fb654c1e180c
+    - name: SenkoPrinter
+      pathPrefix: TextPrinters
+      guid: 5ebc1f5d3d27e2f478f2fb654c1e180c
   - Id: UI
     Resources:
-    - Name: BacklogUI
-      PathPrefix: UI
-      Guid: 7fba909c66b25324cb77db18679c2c96
-    - Name: CGGalleryUI
-      PathPrefix: UI
-      Guid: 71da50c8dae82bd42ba67528804e820c
-    - Name: ClickThroughPanel
-      PathPrefix: UI
-      Guid: 702c32b2de0c0784b9a66ec90601874f
-    - Name: ConfirmationUI
-      PathPrefix: UI
-      Guid: 88d03f19bcbff914ba33a7c9895e2d7c
-    - Name: ExternalScriptsUI
-      PathPrefix: UI
-      Guid: 671ceb4f549ddf046913d7debf113469
-    - Name: LoadingUI
-      PathPrefix: UI
-      Guid: 53aad00e5cf184e458adb001c550518a
-    - Name: MovieUI
-      PathPrefix: UI
-      Guid: f9a211517d1cb1a44964dc2254463049
-    - Name: PauseUI
-      PathPrefix: UI
-      Guid: 480f5db62ea305c46b89a86496d2a0c9
-    - Name: RollbackUI
-      PathPrefix: UI
-      Guid: a32c73a3aff4b274c85b3ff16c854b07
-    - Name: SaveLoadUI
-      PathPrefix: UI
-      Guid: 8d53726b3d08433479398f02b4780e7f
-    - Name: SceneTransitionUI
-      PathPrefix: UI
-      Guid: e3b234b4273b7f64ab3f1d9fe425ed23
-    - Name: SettingsUI
-      PathPrefix: UI
-      Guid: 65c37f59e9b266f468dd5381fdc03fc3
-    - Name: TipsUI
-      PathPrefix: UI
-      Guid: f5aae572225ee1b4c96d1a17fc5cb073
-    - Name: TitleUI
-      PathPrefix: UI
-      Guid: 4b121aa1be1b7e04480b452c595ff17a
-    - Name: VariableInputUI
-      PathPrefix: UI
-      Guid: bb95f484e341dcd4391a572f22b7d067
+    - name: BacklogUI
+      pathPrefix: UI
+      guid: 7fba909c66b25324cb77db18679c2c96
+    - name: CGGalleryUI
+      pathPrefix: UI
+      guid: 71da50c8dae82bd42ba67528804e820c
+    - name: ClickThroughPanel
+      pathPrefix: UI
+      guid: 702c32b2de0c0784b9a66ec90601874f
+    - name: ConfirmationUI
+      pathPrefix: UI
+      guid: 88d03f19bcbff914ba33a7c9895e2d7c
+    - name: ExternalScriptsUI
+      pathPrefix: UI
+      guid: 671ceb4f549ddf046913d7debf113469
+    - name: LoadingUI
+      pathPrefix: UI
+      guid: 53aad00e5cf184e458adb001c550518a
+    - name: MovieUI
+      pathPrefix: UI
+      guid: f9a211517d1cb1a44964dc2254463049
+    - name: PauseUI
+      pathPrefix: UI
+      guid: 480f5db62ea305c46b89a86496d2a0c9
+    - name: RollbackUI
+      pathPrefix: UI
+      guid: a32c73a3aff4b274c85b3ff16c854b07
+    - name: SaveLoadUI
+      pathPrefix: UI
+      guid: 8d53726b3d08433479398f02b4780e7f
+    - name: SceneTransitionUI
+      pathPrefix: UI
+      guid: e3b234b4273b7f64ab3f1d9fe425ed23
+    - name: SettingsUI
+      pathPrefix: UI
+      guid: 65c37f59e9b266f468dd5381fdc03fc3
+    - name: TipsUI
+      pathPrefix: UI
+      guid: f5aae572225ee1b4c96d1a17fc5cb073
+    - name: TitleUI
+      pathPrefix: UI
+      guid: 4b121aa1be1b7e04480b452c595ff17a
+    - name: VariableInputUI
+      pathPrefix: UI
+      guid: bb95f484e341dcd4391a572f22b7d067
