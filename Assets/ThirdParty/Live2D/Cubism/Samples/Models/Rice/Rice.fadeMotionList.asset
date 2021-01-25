@@ -12,12 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 403ae2dd693bb1d4b924f6b8d206b053, type: 3}
   m_Name: Rice.fadeMotionList
   m_EditorClassIdentifier: 
-  MotionInstanceIds: ecc4ffffd4c4ffffc0c4ffffa0c4ffffa4450000da450000a845000000460000
+  MotionInstanceIds: ecc4ffffd4c4ffffc0c4ffffa0c4ffff
   CubismFadeMotionObjects:
-  - {fileID: 11400000, guid: 5efbc554e23c94f4bb6b2d0d632e54b6, type: 2}
-  - {fileID: 11400000, guid: fc42464579c773d48a4ec98ed6588fc0, type: 2}
-  - {fileID: 11400000, guid: b0e0c6664b3e31c45bfe689cadca48ae, type: 2}
-  - {fileID: 11400000, guid: a6d3a5ada8705fa4a8369f9d39a168d4, type: 2}
   - {fileID: 11400000, guid: 5efbc554e23c94f4bb6b2d0d632e54b6, type: 2}
   - {fileID: 11400000, guid: fc42464579c773d48a4ec98ed6588fc0, type: 2}
   - {fileID: 11400000, guid: b0e0c6664b3e31c45bfe689cadca48ae, type: 2}

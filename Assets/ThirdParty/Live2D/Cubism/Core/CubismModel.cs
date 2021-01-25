@@ -359,7 +359,12 @@ namespace Live2D.Cubism.Core
 
 
             // Get the default player loop.
-            var playerLoopSystem = PlayerLoop.GetCurrentPlayerLoop();
+            var playerLoopSystem =
+#if UNITY_2019_3_OR_NEWER
+                PlayerLoop.GetCurrentPlayerLoop();
+#else
+                PlayerLoop.GetDefaultPlayerLoop();
+#endif
 
 
             // Get the "PreLateUpdate" system.
