@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Naninovel.Commands;
 using Naninovel.FX;
@@ -26,7 +25,6 @@ namespace Naninovel
         protected virtual Live2DDrawer Drawer { get; private set; }
         protected virtual CharacterLipSyncer LipSyncer { get; private set; }
 
-        private readonly Dictionary<object, HashSet<string>> heldAppearances = new Dictionary<object, HashSet<string>>();
         private LocalizableResourceLoader<GameObject> prefabLoader;
         private string appearance;
         private bool visible;
@@ -91,29 +89,6 @@ namespace Naninovel
         }
 
         public void AllowLipSync (bool active) => LipSyncer.SyncAllowed = active;
-
-        public override async UniTask HoldResourcesAsync (string appearance, object holder)
-        {
-            if (!heldAppearances.ContainsKey(holder))
-            {
-                await prefabLoader.LoadAndHoldAsync(Id, holder);
-                heldAppearances.Add(holder, new HashSet<string>());
-            }
-
-            heldAppearances[holder].Add(appearance);
-        }
-
-        public override void ReleaseResources (string appearance, object holder)
-        {
-            if (!heldAppearances.ContainsKey(holder)) return;
-
-            heldAppearances[holder].Remove(appearance);
-            if (heldAppearances.Count == 0)
-            {
-                heldAppearances.Remove(holder);
-                prefabLoader?.Release(Id, holder);
-            }
-        }
 
         protected virtual void SetAppearance (string appearance)
         {
