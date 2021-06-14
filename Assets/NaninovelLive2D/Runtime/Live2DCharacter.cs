@@ -16,12 +16,15 @@ namespace Naninovel
     [ActorResources(typeof(Live2DController), false)]
     public class Live2DCharacter : MonoBehaviourActor<CharacterMetadata>, ICharacterActor, LipSync.IReceiver, Blur.IBlurable
     {
+        /// <summary>
+        /// Controller component of the instantiated Live2D prefab associated with the actor.
+        /// </summary>
+        public virtual Live2DController Controller { get; private set; }
         public override string Appearance { get => appearance; set => SetAppearance(value); }
         public override bool Visible { get => visible; set => SetVisibility(value); }
         public virtual CharacterLookDirection LookDirection { get => lookDirection; set => SetLookDirection(value); }
 
         protected virtual TransitionalRenderer Renderer { get; private set; }
-        protected virtual Live2DController Controller { get; private set; }
         protected virtual Live2DDrawer Drawer { get; private set; }
         protected virtual CharacterLipSyncer LipSyncer { get; private set; }
 
